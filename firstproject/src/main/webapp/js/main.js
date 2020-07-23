@@ -8,7 +8,7 @@ const MyApp = Mn.Application.extend({
 const myApp = new MyApp();
 
 myApp.on('start', function() {
-    mainRegion.show(new Reg());
+    nextWindow(Reg);
 });
 
 const MyRegion = Mn.Region.extend({ el: $('#myArea') });
@@ -56,30 +56,45 @@ const Auth = Mn.View.extend({
     ,
     toRegistration(){
         console.log("Hey");
-        mainRegion.show(new Reg());
+        nextWindow(Reg);
     },
     authorization(){
         $('#auth').submit(function (e) {
             e.preventDefault();
 
             $.ajax({
-                url:   "/auth"  , //url страницы (action_ajax_form.php)
-                type:     "POST", //метод отправки
-                dataType: "json", //формат данных
+                url:   '/firstproject_war/rest/log/auth'  , //url страницы (action_ajax_form.php)
+                type:     'POST', //метод отправки
+                dataType: 'application/json', //формат данных
                 data: $('#auth').serialize(),  // Сеарилизуем объект
                 success: function(response) { //Данные отправлены успешно
                     console.log("Success");
-                    //    result = $.parseJSON(response);
-                    //    $('#result_form').html('Имя: '+result.name+'<br>Телефон: '+result.phonenumber);
+                    nextWindow(Profile);
                 },
                 error: function(response) { // Данные не отправлены
-                    console.log("error");
-                    //$('#result_form').html('Ошибка. Данные не отправлены.');
+                    console.log("Error");
+                    alert('Something went wrong, try again');
                 }
             })
         });
     }
 
+});
+
+const Profile = Mn.View.extend({
+    template: _.template(`
+    <div>
+        Everything ok!
+    </div>
+`)
+});
+
+const NewProfile = Mn.View.extend({
+    template: _.template(`
+    <div>
+        Create your profile!
+    </div>
+`)
 });
 
 const Reg = Mn.View.extend({
@@ -124,9 +139,32 @@ const Reg = Mn.View.extend({
     ,
     toAuthorization(){
         console.dir("fuck you bitch!!!!");
-        mainRegion.show(new Auth());
+        nextWindow(Auth);
     },
+    registration(){
+        $('#reg').submit(function (e) {
+            e.preventDefault();
 
+            $.ajax({
+                url:   '/firstproject_war/rest/log/reg'  , //url страницы (action_ajax_form.php)
+                type:     'POST', //метод отправки
+                dataType: 'application/json', //формат данных
+                data: $('#reg').serialize(),  // Сеарилизуем объект
+                success: function(response) { //Данные отправлены успешно
+                    console.log("Success");
+                    nextWindow(NewProfile);
+                },
+                error: function(response) { // Данные не отправлены
+                    console.log("Error");
+                    alert('Something went wrong, try again');
+                }
+            })
+        });
+    }
 });
 
 myApp.start();
+
+function nextWindow(nextType) {
+    mainRegion.show(new nextType());
+}
