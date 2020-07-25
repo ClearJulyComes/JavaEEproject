@@ -1,25 +1,30 @@
 import models.LogininfoEntity;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.ejb.Stateless;
+import javax.persistence.*;
 
-public class Login {
+@Stateless
+public class Login implements DBInterface {
     private static final String PERSISTENT_UNIT_NAME = "firstprojectlogin";
+    private String login;
+    private String password;
 
-    public void addNewProfile (String login, String password){
+    @PersistenceContext(unitName = PERSISTENT_UNIT_NAME)
+    EntityManager entityManager;
+
+    public Login(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
+
+    @Override
+    public void dbMethod() {
         LogininfoEntity logininfoEntity = new LogininfoEntity();
         logininfoEntity.setLogin(login);
         logininfoEntity.setPassword(password);
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENT_UNIT_NAME);
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction et = em.getTransaction();
-        et.begin();
-        em.persist(logininfoEntity);
-        et.commit();
-        em.close();
-        emf.close();
+        //em.getTransaction().begin();
+        entityManager.persist(logininfoEntity);
+        //em.getTransaction().commit();
     }
 }

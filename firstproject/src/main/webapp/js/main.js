@@ -69,7 +69,8 @@ const Auth = Mn.View.extend({
                 data: $('#auth').serialize(),  // Сеарилизуем объект
                 success: function(response) { //Данные отправлены успешно
                     console.log("Success");
-                    nextWindow(Profile);
+                    alert(response);
+                    //nextWindow(Profile);
                 },
                 error: function(response) { // Данные не отправлены
                     console.log("Error");

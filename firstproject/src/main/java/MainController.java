@@ -1,6 +1,7 @@
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -18,10 +19,12 @@ public class MainController {
     @POST
     @Path("/auth")
     public void authMethod(@Context HttpServletRequest request, @Context HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-        //try (PrintWriter writer = response.getWriter()) {
-        //    writer.println("<h2>Hello from HelloServlet</h2>");
-        //}
+        response.setContentType("application/json");
+        log.info("Auth");
+        Login login = new Login(request.getParameter("login"), request.getParameter("password"));
+        final PrintWriter writer = response.getWriter();
+        login.dbMethod();
+        writer.println(request.getParameter("login"));
         log.info("oki");
     }
 
