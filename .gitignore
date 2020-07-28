@@ -4,3 +4,4 @@ firstproject/.idea/artifacts/firstproject_war.xml
 /firstproject/target
 /firstproject/.idea
 /firstproject/firstproject.iml
+/firstproject/*.log

@@ -1,13 +1,10 @@
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Logger;
@@ -20,12 +17,10 @@ public class MainController {
     @Path("/auth")
     public void authMethod(@Context HttpServletRequest request, @Context HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
-        log.info("Auth");
         Login login = new Login(request.getParameter("login"), request.getParameter("password"));
         final PrintWriter writer = response.getWriter();
         login.dbMethod();
         writer.println(request.getParameter("login"));
-        log.info("oki");
     }
 
     @POST
@@ -39,6 +34,7 @@ public class MainController {
     }
 
     @GET
+    @Path("/auth")
     public String tat(@Context HttpServletRequest request, @Context HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         try (PrintWriter writer = response.getWriter()) {
