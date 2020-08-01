@@ -7,8 +7,8 @@
     <persistence-unit name="UnitName" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <class>UserLogin</class>
-        <class>Login</class>
+        <class>UserInfo</class>
+        <class>LoginReg</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" /> <!-- DB Driver -->
@@ -17,7 +17,7 @@
             <property name="javax.persistence.jdbc.password" value="1234" /> <!-- DB Password -->
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/> <!-- DB Dialect -->
-            <property name="hibernate.hbm2ddl.auto" value="create" /> <!-- create / create-drop / update -->
+            <property name="hibernate.hbm2ddl.auto" value="update" /> <!-- create / create-drop / update -->
 
             <property name="hibernate.show_sql" value="true" /> <!-- Show SQL in console -->
             <property name="hibernate.format_sql" value="true" /> <!-- Show SQL formatted -->

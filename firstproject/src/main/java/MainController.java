@@ -1,3 +1,5 @@
+import org.apache.logging.log4j.LogManager;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,36 +13,32 @@ import java.util.logging.Logger;
 
 @Path("/log")
 public class MainController {
-    private static Logger log = Logger.getLogger(MainController.class.getName());
+    private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(MainController.class);
 
     @POST
     @Path("/auth")
     public void authMethod(@Context HttpServletRequest request, @Context HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json");
-        Login login = new Login(request.getParameter("login"), request.getParameter("password"));
-        final PrintWriter writer = response.getWriter();
-        login.dbMethod();
-        writer.println(request.getParameter("login"));
+        response.setContentType("json;charset=UTF-8");
+        PrintWriter writer = response.getWriter();
+        LoginAuth loginAuth = new LoginAuth(request.getParameter("login"), request.getParameter("password"));
+        logger.info("authMethod");
+        loginAuth.dbMethod();
+        if(loginAuth.getLoginAuth() == null){
+            logger.info("isEmpty");
+            writer.println("shiiit");
+        }else {
+            logger.info("return true");
+            writer.println("fine");
+        }
+        writer.flush();
+        writer.close();
     }
 
     @POST
     @Path("/reg")
     public void regMethod(@Context HttpServletRequest request, @Context HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
-        //try (PrintWriter writer = response.getWriter()) {
-        //    writer.println("<h2>Hello from HelloServlet</h2>");
-        //}
-        log.info("oki");
-    }
-
-    @GET
-    @Path("/auth")
-    public String tat(@Context HttpServletRequest request, @Context HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-        try (PrintWriter writer = response.getWriter()) {
-            writer.println("<h2>Hello from HelloServlet</h2>");
-        }
-        //response.sendRedirect("https://google.com/");
-        return "ok"; //TODO replace this stub to something useful
+        LoginReg loginReg = new LoginReg(request.getParameter("login"), request.getParameter("password"));
+        loginReg.dbMethod();
     }
 }

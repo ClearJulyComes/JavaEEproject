@@ -1,5 +1,3 @@
-
-
 const MyApp = Mn.Application.extend({
     initialize: function(options) {
     }
@@ -35,7 +33,7 @@ const Auth = Mn.View.extend({
     <td>
     <button id="toRegButton">Registration</button>
     </td>
-    <td></td>
+    <td>Login</td>
     <td>
     <button id="authButton">Ok</button>
     </td>
@@ -65,12 +63,12 @@ const Auth = Mn.View.extend({
             $.ajax({
                 url:   '/firstproject_war/rest/log/auth'  , //url страницы (action_ajax_form.php)
                 type:     'POST', //метод отправки
-                dataType: 'application/json', //формат данных
+                dataType: 'json', //формат данных
                 data: $('#auth').serialize(),  // Сеарилизуем объект
                 success: function(response) { //Данные отправлены успешно
                     console.log("Success");
-                    alert(response.toString());
-                    //nextWindow(Profile);
+                    console.log(response);
+                    nextWindow(NewProfile, response);
                 },
                 error: function(response) { // Данные не отправлены
                     console.log("Error");
@@ -92,9 +90,10 @@ const Profile = Mn.View.extend({
 
 const NewProfile = Mn.View.extend({
     template: _.template(`
-    <div>
+    <div id="myInfo">
         Create your profile!
     </div>
+    <div id="friendList"></div>
 `)
 });
 
@@ -119,7 +118,7 @@ const Reg = Mn.View.extend({
                         <td>
                         <button id="toAuthButton">Authorization</button>
                         </td>
-                        <td></td>
+                        <td>Registration</td>
                         <td>
                             <button id="regButton">Ok</button>
                         </td>
@@ -153,7 +152,7 @@ const Reg = Mn.View.extend({
                 data: $('#reg').serialize(),  // Сеарилизуем объект
                 success: function(response) { //Данные отправлены успешно
                     console.log("Success");
-                    nextWindow(NewProfile);
+                    nextWindow(NewProfile, response);
                 },
                 error: function(response) { // Данные не отправлены
                     console.log("Error");
@@ -166,6 +165,16 @@ const Reg = Mn.View.extend({
 
 myApp.start();
 
-function nextWindow(nextType) {
+function nextWindow(nextType, message) {
     mainRegion.show(new nextType());
+    $('#myInfo').html(message);
 }
+
+const Friend = Mn.Model.extends({
+    defaults:{
+        name: '',
+        write: ''
+    }
+});
+
+const Friends = Mn.Collection.extend({});
