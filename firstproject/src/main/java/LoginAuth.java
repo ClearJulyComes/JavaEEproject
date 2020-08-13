@@ -11,9 +11,6 @@ public class LoginAuth {
     private String loginAuth;
     private String password;
 
-    //@PersistenceContext(unitName = PERSISTENT_UNIT_NAME)
-    //EntityManager entityManager;
-
     public LoginAuth(String loginAuth, String password) {
         this.loginAuth = loginAuth;
         this.password = password;
@@ -34,7 +31,7 @@ public class LoginAuth {
             Query query = entityManager.createQuery("SELECT l FROM UserInfo l WHERE l.userLogin = :userLoginParam");
             query.setParameter("userLoginParam", user.getUserLogin());
             UserInfo userLoginDB = (UserInfo) query.getSingleResult();
-            logger.info("From DB login: "+userLoginDB.getUserLogin()+"password: " + userLoginDB.getUserPassword());
+            logger.info("From DB login: "+userLoginDB.getUserLogin()+" password: " + userLoginDB.getUserPassword());
             if(!userLoginDB.getUserPassword().equals(user.getUserPassword())){
                 this.loginAuth = null;
                 logger.info("Make null");
@@ -46,6 +43,12 @@ public class LoginAuth {
         }catch (Exception e){
             logger.warn("Error with DB query: " + e);
         }
+    }
+
+    public void dbMethodCookie(){
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENT_UNIT_NAME);
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        UserInfo userInfo = entityManager.find(UserInfo.class, this.loginAuth);
     }
 
     public String getLoginAuth() {

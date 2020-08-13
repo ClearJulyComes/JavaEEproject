@@ -3,10 +3,12 @@ import org.apache.logging.log4j.LogManager;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Cookie;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Logger;
@@ -17,12 +19,19 @@ public class MainController {
 
     @POST
     @Path("/auth")
-    public void authMethod(@Context HttpServletRequest request, @Context HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("json;charset=UTF-8");
-        PrintWriter writer = response.getWriter();
-        LoginAuth loginAuth = new LoginAuth(request.getParameter("login"), request.getParameter("password"));
+    public void authMethod(@CookieParam("session") Cookie cookie, @Context HttpServletRequest request, @Context HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text;charset=UTF-8");
+        String sessionCookie = cookie.getValue();
+        LoginAuth loginAuth;
+        if(!cookie.getValue().isEmpty()) {
+            loginAuth = new LoginAuth(request.getParameter("login"), null);
+            loginAuth.dbMethodCookie();
+        }else{
+            loginAuth = new LoginAuth(request.getParameter("login"), request.getParameter("password"));
+            loginAuth.dbMethod();
+        }
         logger.info("authMethod");
-        loginAuth.dbMethod();
+        PrintWriter writer = response.getWriter();
         if(loginAuth.getLoginAuth() == null){
             logger.info("isEmpty");
             writer.println("shiiit");

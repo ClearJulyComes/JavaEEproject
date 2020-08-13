@@ -1,6 +1,8 @@
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class UserInfo {
@@ -9,6 +11,8 @@ public class UserInfo {
     private String userLogin;
     @NotNull
     private String userPassword;
+    @OneToMany(mappedBy = "userLoginF", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<ListFriends> friends = new ArrayList<>();
 
     public UserInfo(){
     }

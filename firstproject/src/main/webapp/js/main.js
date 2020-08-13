@@ -63,15 +63,16 @@ const Auth = Mn.View.extend({
             $.ajax({
                 url:   '/firstproject_war/rest/log/auth'  , //url страницы (action_ajax_form.php)
                 type:     'POST', //метод отправки
-                dataType: 'json', //формат данных
+                dataType: 'text', //формат данных
                 data: $('#auth').serialize(),  // Сеарилизуем объект
                 success: function(response) { //Данные отправлены успешно
                     console.log("Success");
                     console.log(response);
-                    nextWindow(NewProfile, response);
+                    nextWindow(Profile, response);
                 },
                 error: function(response) { // Данные не отправлены
                     console.log("Error");
+                    console.log(response);
                     alert('Something went wrong, try again');
                 }
             })
@@ -85,7 +86,52 @@ const Profile = Mn.View.extend({
     <div>
         Everything ok!
     </div>
-`)
+    <div> 
+            <form id="addFriend" method="post">
+    <table>
+    <tr>
+    <td>Add to you friend list</td>
+    <td colspan="2">
+    <input type="text" name="login" placeholder="login">
+    </td>
+    </tr>
+    <tr>
+    <td>
+    <button id="addFriendButton">Add</button>
+    </td>
+    <td></td>
+    <td>
+    </td>
+    </tr>
+    </table>
+    </form>
+        </div>
+`),
+    events: {'click @ui.addFriend' : 'addingFriend'},
+    ui: {addFriend : '#addFriendButton'},
+    addingFriend(){
+        $('#addFriend').submit(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                url:   '/firstproject_war/rest/friend/add'  , //url страницы (action_ajax_form.php)
+                type:     'POST', //метод отправки
+                dataType: 'text', //формат данных
+                data: $('#auth').serialize(),  // Сеарилизуем объект
+                success: function(response) { //Данные отправлены успешно
+                    console.log("Success");
+                    console.log(response);
+                    alert(response);
+                    //nextWindow(NewProfile, response);
+                },
+                error: function(response) { // Данные не отправлены
+                    console.log("Error");
+                    console.log(response);
+                    alert('Something went wrong, try again');
+                }
+            })
+        });
+    }
 });
 
 const NewProfile = Mn.View.extend({
