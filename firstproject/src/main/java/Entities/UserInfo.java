@@ -1,8 +1,12 @@
-import com.sun.istack.NotNull;
+package Entities;
 
+import com.sun.istack.NotNull;
+import Entities.*;
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class UserInfo {
@@ -11,8 +15,10 @@ public class UserInfo {
     private String userLogin;
     @NotNull
     private String userPassword;
-    @OneToMany(mappedBy = "userLoginF", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<ListFriends> friends = new ArrayList<>();
+    @OneToMany(mappedBy = "userInfo", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private Set<Friends> friends = new HashSet<Friends>();
+    @OneToMany(mappedBy = "hisFriend", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private Set<Friends> hisFriends = new HashSet<Friends>();
 
     public UserInfo(){
     }

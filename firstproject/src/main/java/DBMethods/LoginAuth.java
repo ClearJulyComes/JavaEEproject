@@ -1,5 +1,8 @@
+package DBMethods;
+
 import javax.persistence.*;
 
+import Entities.UserInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -43,12 +46,6 @@ public class LoginAuth {
         }catch (Exception e){
             logger.warn("Error with DB query: " + e);
         }
-    }
-
-    public void dbMethodCookie(){
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENT_UNIT_NAME);
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        UserInfo userInfo = entityManager.find(UserInfo.class, this.loginAuth);
     }
 
     public String getLoginAuth() {

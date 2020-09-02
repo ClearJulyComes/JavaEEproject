@@ -1,35 +1,31 @@
+package Controllers;
+
 import org.apache.logging.log4j.LogManager;
+import Entities.*;
+import DBMethods.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.CookieParam;
-import javax.ws.rs.GET;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Cookie;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Logger;
 
 @Path("/log")
-public class MainController {
-    private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(MainController.class);
+public class LoginController {
+    private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(LoginController.class);
 
     @POST
     @Path("/auth")
-    public void authMethod(@CookieParam("session") Cookie cookie, @Context HttpServletRequest request, @Context HttpServletResponse response) throws ServletException, IOException {
+    public void authMethod(@Context HttpServletRequest request, @Context HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text;charset=UTF-8");
-        String sessionCookie = cookie.getValue();
+        HttpSession session = request.getSession();
         LoginAuth loginAuth;
-        if(!cookie.getValue().isEmpty()) {
-            loginAuth = new LoginAuth(request.getParameter("login"), null);
-            loginAuth.dbMethodCookie();
-        }else{
-            loginAuth = new LoginAuth(request.getParameter("login"), request.getParameter("password"));
-            loginAuth.dbMethod();
-        }
+        loginAuth = new LoginAuth(request.getParameter("login"), request.getParameter("password"));
+        loginAuth.dbMethod();
         logger.info("authMethod");
         PrintWriter writer = response.getWriter();
         if(loginAuth.getLoginAuth() == null){
@@ -38,6 +34,7 @@ public class MainController {
         }else {
             logger.info("return true");
             writer.println("fine");
+            session.setAttribute("userLogin", loginAuth.getLoginAuth());
         }
         writer.flush();
         writer.close();
@@ -47,7 +44,9 @@ public class MainController {
     @Path("/reg")
     public void regMethod(@Context HttpServletRequest request, @Context HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
+        HttpSession session = request.getSession();
         LoginReg loginReg = new LoginReg(request.getParameter("login"), request.getParameter("password"));
         loginReg.dbMethod();
+        session.setAttribute("userLogin", loginReg.getLoginReg());
     }
 }

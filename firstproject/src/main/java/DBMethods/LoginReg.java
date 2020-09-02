@@ -1,6 +1,10 @@
+package DBMethods;
+
+import Entities.UserInfo;
+
 import javax.persistence.*;
 
-public class LoginReg implements DBInterface {
+public class LoginReg {
     private static final String PERSISTENT_UNIT_NAME = "UnitName";
     private String loginReg;
     private String password;
@@ -10,7 +14,6 @@ public class LoginReg implements DBInterface {
         this.password = password;
     }
 
-    @Override
     public void dbMethod() {
             UserInfo userInfo = new UserInfo();
             userInfo.setUserLogin(loginReg);
@@ -22,5 +25,9 @@ public class LoginReg implements DBInterface {
             entityManager.persist(userInfo);
             entityManager.getTransaction().commit();
             entityManager.close();
+    }
+
+    public String getLoginReg() {
+        return loginReg;
     }
 }

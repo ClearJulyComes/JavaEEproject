@@ -5,8 +5,33 @@ const MyApp = Mn.Application.extend({
 
 const myApp = new MyApp();
 
+const Workspace = Backbone.Router.extend({
+
+    routes: {
+        "auth":                 "auth",
+        "registration":         "registration",
+        "friends":              "friends"
+    },
+
+    help: function() {
+        console.log("help");
+    },
+
+    auth: function() {
+        nextWindow(Auth);
+    },
+    registration: function() {
+        nextWindow(Reg);
+    },
+    friends: function () {
+        nextWindow(Profile);
+    }
+});
+const work = new Workspace();
+
 myApp.on('start', function() {
-    nextWindow(Reg);
+    Backbone.history.start({pushState: true});
+    work.navigate("registration", {trigger: true});
 });
 
 const MyRegion = Mn.Region.extend({ el: $('#myArea') });
@@ -54,7 +79,7 @@ const Auth = Mn.View.extend({
     ,
     toRegistration(){
         console.log("Hey");
-        nextWindow(Reg);
+        work.navigate("registration", {trigger: true});
     },
     authorization(){
         $('#auth').submit(function (e) {
@@ -68,7 +93,7 @@ const Auth = Mn.View.extend({
                 success: function(response) { //Данные отправлены успешно
                     console.log("Success");
                     console.log(response);
-                    nextWindow(Profile, response);
+                    work.navigate("friends", {trigger: true});
                 },
                 error: function(response) { // Данные не отправлены
                     console.log("Error");
@@ -97,7 +122,7 @@ const Profile = Mn.View.extend({
     </tr>
     <tr>
     <td>
-    <button id="addFriendButton">Add</button>
+    <button id="addFriendButton" value="submit">Add</button>
     </td>
     <td></td>
     <td>
@@ -112,16 +137,18 @@ const Profile = Mn.View.extend({
     addingFriend(){
         $('#addFriend').submit(function (e) {
             e.preventDefault();
-
+            const that = this;
+            console.log("Start add request");
             $.ajax({
                 url:   '/firstproject_war/rest/friend/add'  , //url страницы (action_ajax_form.php)
                 type:     'POST', //метод отправки
                 dataType: 'text', //формат данных
-                data: $('#auth').serialize(),  // Сеарилизуем объект
+                data: $('#addFriend').serialize(),  // Сеарилизуем объект
                 success: function(response) { //Данные отправлены успешно
                     console.log("Success");
                     console.log(response);
-                    alert(response);
+                    console.log("End add request");
+                    nextWindow(Profile, response);
                     //nextWindow(NewProfile, response);
                 },
                 error: function(response) { // Данные не отправлены
@@ -129,7 +156,7 @@ const Profile = Mn.View.extend({
                     console.log(response);
                     alert('Something went wrong, try again');
                 }
-            })
+            });
         });
     }
 });
@@ -184,8 +211,8 @@ const Reg = Mn.View.extend({
     }
     ,
     toAuthorization(){
-        console.dir("fuck you bitch!!!!");
-        nextWindow(Auth);
+        console.dir("To auth");
+        work.navigate("auth", {trigger: true});
     },
     registration(){
         $('#reg').submit(function (e) {
@@ -198,7 +225,7 @@ const Reg = Mn.View.extend({
                 data: $('#reg').serialize(),  // Сеарилизуем объект
                 success: function(response) { //Данные отправлены успешно
                     console.log("Success");
-                    nextWindow(NewProfile, response);
+                    work.navigate("friends", {trigger: true});
                 },
                 error: function(response) { // Данные не отправлены
                     console.log("Error");
@@ -209,12 +236,11 @@ const Reg = Mn.View.extend({
     }
 });
 
-myApp.start();
-
 function nextWindow(nextType, message) {
     mainRegion.show(new nextType());
     $('#myInfo').html(message);
 }
+myApp.start();
 
 const Friend = Mn.Model.extends({
     defaults:{
