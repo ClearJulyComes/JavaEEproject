@@ -29,13 +29,27 @@ const Workspace = Backbone.Router.extend({
 });
 const work = new Workspace();
 
-myApp.on('start', function() {
-    Backbone.history.start({pushState: true});
-    work.navigate("registration", {trigger: true});
-});
-
 const MyRegion = Mn.Region.extend({ el: $('#myArea') });
 const mainRegion = new MyRegion();
+const MenuRegion = Mn.Region.extend({ el: $('#firstPart') });
+const menuRegion = new MenuRegion();
+
+const Friend = Backbone.Model.extend({
+});
+
+const Friends = Backbone.Collection.extend({
+    model: Friend
+});
+
+myApp.on('start', function() {
+    Backbone.history.start({pushState: true, root: "/firstproject_war/"});
+    work.navigate("registration", {trigger: true});
+    menuRegion.show(new Menu());
+});
+
+const Menu = Mn.View.extend({
+    template: _.template(` It should be a menu`)
+});
 
 const Auth = Mn.View.extend({
     template: _.template(`
@@ -106,13 +120,34 @@ const Auth = Mn.View.extend({
 
 });
 
+const FriendView = Mn.View.extend({
+    tagName: "tr",
+    initialize(){
+        this.template = _.template($('#friendListJS').html())
+    },
+    render: function() {
+        this.$el.html(this.template(this.model.attributes));
+        return this;
+    },
+});
+
 const Profile = Mn.View.extend({
+    regions: {
+        searchRegion: '#search',
+    },
     template: _.template(`
+    <div id="search"></div>
     <div>
-        Everything ok!
-    </div>
-    <div> 
-            <form id="addFriend" method="post">
+        <tbody id="friendList"></tbody>
+</div>
+`),
+    onRender(){
+        this.showChildView('searchRegion', new SearchFriend());
+    }
+});
+
+const SearchFriend = Mn.View.extend({
+    template: _.template(` <form id="addFriend" method="post">
     <table>
     <tr>
     <td>Add to you friend list</td>
@@ -129,9 +164,7 @@ const Profile = Mn.View.extend({
     </td>
     </tr>
     </table>
-    </form>
-        </div>
-`),
+    </form>`),
     events: {'click @ui.addFriend' : 'addingFriend'},
     ui: {addFriend : '#addFriendButton'},
     addingFriend(){
@@ -161,15 +194,6 @@ const Profile = Mn.View.extend({
     }
 });
 
-const NewProfile = Mn.View.extend({
-    template: _.template(`
-    <div id="myInfo">
-        Create your profile!
-    </div>
-    <div id="friendList"></div>
-`)
-});
-
 const Reg = Mn.View.extend({
     template: _.template(`
         <div>
@@ -178,13 +202,13 @@ const Reg = Mn.View.extend({
                     <tr>
                         <td>Login</td>
                         <td colspan="2">
-                            <input type="text" name="login" placeholder="login">
+                            <input type="text" name="login" placeholder="login" id="login">
                         </td>
                     </tr>
                     <tr>
                         <td>Password</td>
                         <td colspan="2">
-                            <input type="text" name="password" placeholder="password">
+                            <input type="text" name="password" placeholder="password" id="password">
                         </td>
                     </tr>
                     <tr>
@@ -208,8 +232,11 @@ const Reg = Mn.View.extend({
     ui: {
         toAuth: '#toAuthButton',
         reg: '#regButton'
-    }
-    ,
+    },
+    modelEvents:{
+        'sync' : 'renderProfile',
+        'error': 'errorReg'
+    },
     toAuthorization(){
         console.dir("To auth");
         work.navigate("auth", {trigger: true});
@@ -236,17 +263,11 @@ const Reg = Mn.View.extend({
     }
 });
 
+
+
 function nextWindow(nextType, message) {
     mainRegion.show(new nextType());
     $('#myInfo').html(message);
 }
+
 myApp.start();
-
-const Friend = Mn.Model.extends({
-    defaults:{
-        name: '',
-        write: ''
-    }
-});
-
-const Friends = Mn.Collection.extend({});

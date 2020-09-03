@@ -30,4 +30,8 @@ public class LoginReg {
     public String getLoginReg() {
         return loginReg;
     }
+
+    public String getPassword() {
+        return password;
+    }
 }
