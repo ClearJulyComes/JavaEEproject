@@ -39,8 +39,8 @@ public class LoginAuth {
                 this.loginAuth = null;
                 logger.info("Make null");
             }else{
-                Query queryfriends = entityManager.createQuery("SELECT l FROM UserInfo l WHERE l.userLogin = :userLoginParam");
-                queryfriends.setParameter("userLoginParam", user.getUserLogin());
+                Query queryFriends = entityManager.createQuery("SELECT l FROM UserInfo l WHERE l.userLogin = :userLoginParam");
+                queryFriends.setParameter("userLoginParam", user.getUserLogin());
             }
             logger.info("So what: " + loginAuth);
         }catch (Exception e){

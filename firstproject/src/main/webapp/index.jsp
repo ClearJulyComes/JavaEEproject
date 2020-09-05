@@ -9,14 +9,94 @@
         <script src="./js/backbone.js"></script>
         <script src="https://github.com/marionettejs/backbone.radio.git"></script>
         <script src="./js/backbone.marionette.js"></script>
+        <script type="text/javascript" src="./js/Models/FriendModel.js"></script>
+        <script type="text/javascript" src="./js/Views/MenuView.js"></script>
+        <script type="text/javascript" src="./js/Views/Wrapper.js"></script>
+        <script type="text/javascript" src="./js/Views/AuthView.js"></script>
+        <script type="text/javascript" src="./js/Views/RegView.js"></script>
+        <script type="text/javascript" src="./js/Views/ProfileView.js"></script>
+        <script type="text/javascript" src="./js/Router/Router.js"></script>
     </head>
     <body>
-        <div id="firstPart">Ok lets start</div>
-        <div id="myArea"></div>
-        <script type="text/javascript" src="./js/main.js"></script>
-        <script type="text/template" class="friendListJS">
-            <td><span class="friend"><%= friend %></span></td>
-            <td><button>Delete</button></td>
+        <div id="wrap">Ok lets start</div>
+        <script type="text/template" id="authView">
+            <div>
+                <form id="auth" method="post">
+                    <table>
+                        <tr>
+                            <td>Login</td>
+                            <td colspan="2">
+                                <input type="text" name="login" placeholder="login">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Password</td>
+                            <td colspan="2">
+                                <input type="text" name="password" placeholder="password">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button id="toRegButton">Registration</button>
+                            </td>
+                            <td>Login</td>
+                            <td>
+                                <button id="authButton">Ok</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
         </script>
+        <script type="text/template" id="regView">
+            <div>
+                <form id="reg" method="post">
+                    <table>
+                        <tr>
+                            <td>Login</td>
+                            <td colspan="2">
+                                <input type="text" name="login" placeholder="login" id="login">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Password</td>
+                            <td colspan="2">
+                                <input type="text" name="password" placeholder="password" id="password">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button id="toAuthButton">Authorization</button>
+                            </td>
+                            <td>Registration</td>
+                            <td>
+                                <button id="regButton">Ok</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </script>
+        <script type="text/template" id="searchFriendView">
+            <form id="addFriend" method="post">
+                <table>
+                    <tr>
+                        <td>Add to you friend list</td>
+                        <td colspan="2">
+                            <input type="text" name="login" placeholder="login">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button id="addFriendButton" value="submit">Add</button>
+                        </td>
+                        <td></td>
+                        <td>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </script>
+        <script type="text/javascript" src="./js/main.js"></script>
     </body>
 </html>
