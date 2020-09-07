@@ -1,5 +1,5 @@
 const Auth = Mn.View.extend({
-    el: $('#myArea'),
+    //el: $('#main'),
     initialize(){
         this.template = _.template($('#authView').html())
     },
@@ -15,7 +15,7 @@ const Auth = Mn.View.extend({
     ,
     toRegistration(){
         console.log("Hey");
-        work.navigate("registration", {trigger: true});
+        router.navigate("", {trigger: true});
     },
     authorization(){
         $('#auth').submit(function (e) {
@@ -29,7 +29,7 @@ const Auth = Mn.View.extend({
                 success: function(response) { //Данные отправлены успешно
                     console.log("Success");
                     console.log(response);
-                    work.navigate("friends", {trigger: true});
+                    router.navigate("friends", {trigger: true});
                 },
                 error: function(response) { // Данные не отправлены
                     console.log("Error");

@@ -16,4 +16,8 @@ $('body').on('click', 'a[href^="/"]', function (e) {
     router.navigate($(this).attr('href'), {trigger: true});
 });
 
+function renderNewView(type){
+    wrapper.showChildView('mainRegion', new type());
+}
+
 myApp.start();

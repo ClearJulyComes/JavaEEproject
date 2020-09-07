@@ -14,13 +14,14 @@
         <script type="text/javascript" src="./js/Views/Wrapper.js"></script>
         <script type="text/javascript" src="./js/Views/AuthView.js"></script>
         <script type="text/javascript" src="./js/Views/RegView.js"></script>
+        <script type="text/javascript" src="./js/Views/SearchFriendView.js"></script>
+        <script type="text/javascript" src="./js/Views/FriendsContainerView.js"></script>
         <script type="text/javascript" src="./js/Views/ProfileView.js"></script>
         <script type="text/javascript" src="./js/Router/Router.js"></script>
     </head>
     <body>
         <div id="wrap">Ok lets start</div>
         <script type="text/template" id="authView">
-            <div>
                 <form id="auth" method="post">
                     <table>
                         <tr>
@@ -46,10 +47,8 @@
                         </tr>
                     </table>
                 </form>
-            </div>
         </script>
         <script type="text/template" id="regView">
-            <div>
                 <form id="reg" method="post">
                     <table>
                         <tr>
@@ -75,7 +74,6 @@
                         </tr>
                     </table>
                 </form>
-            </div>
         </script>
         <script type="text/template" id="searchFriendView">
             <form id="addFriend" method="post">
@@ -97,6 +95,7 @@
                 </table>
             </form>
         </script>
+        <script id="friendListContainer" type="text/template">Test <div id="friendListUL">yuiojk</div></script>
         <script type="text/javascript" src="./js/main.js"></script>
     </body>
 </html>

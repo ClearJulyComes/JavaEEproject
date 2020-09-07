@@ -1,5 +1,5 @@
 const Reg = Mn.View.extend({
-    el: '#myArea',
+    //el: $('#main'),
     initialize(){
         this.template = _.template($('#regView').html())
     },
@@ -18,7 +18,7 @@ const Reg = Mn.View.extend({
     },
     toAuthorization(){
         console.dir("To auth");
-        work.navigate("auth", {trigger: true});
+        router.navigate("auth", {trigger: true});
     },
     registration(){
         $('#reg').submit(function (e) {
@@ -31,7 +31,7 @@ const Reg = Mn.View.extend({
                 data: $('#reg').serialize(),  // Сеарилизуем объект
                 success: function(response) { //Данные отправлены успешно
                     console.log("Success");
-                    work.navigate("friends", {trigger: true});
+                    router.navigate("friends", {trigger: true});
                 },
                 error: function(response) { // Данные не отправлены
                     console.log("Error");

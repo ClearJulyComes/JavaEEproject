@@ -44,4 +44,20 @@ public class FriendController {
         out.print(jsonString);
         out.flush();
     }
+    @GET
+    @Path("/get/friend")
+    public void sendFriendList2(@Context HttpServletRequest request, @Context HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession();
+        String sessionLogin = (String) session.getAttribute("userLogin");
+        PrintWriter out = response.getWriter();
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        String jsonString = new JSONObject()
+                .put("friendshipId", "8")
+                .put("hisFriend", "Tolya")
+                .put("userLogin", "me")
+                .toString();
+        out.print(jsonString);
+        out.flush();
+    }
 }

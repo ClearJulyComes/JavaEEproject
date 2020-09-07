@@ -11,12 +11,12 @@ const Router = Backbone.Router.extend({
     },
 
     auth: function() {
-        new Auth();
+        renderNewView(Auth);
     },
     registration: function() {
-        new Reg();
+        renderNewView(Reg);
     },
     friends: function () {
-        new Profile();
+        renderNewView(Profile);
     }
 });

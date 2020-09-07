@@ -4,7 +4,7 @@ const Wrapper = Mn.View.extend({
         <div id="firstPart"></div>
     `),
     regions:{
-        mainRegion: '#myArea',
+        mainRegion: '#main',
         menuRegion: '#firstPart'
     },
     onRender() {
