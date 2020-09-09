@@ -4,10 +4,7 @@ import Entities.Friends;
 import Entities.UserInfo;
 import org.apache.logging.log4j.LogManager;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.persistence.*;
 import java.util.List;
 
 public class FriendList {
@@ -18,13 +15,12 @@ public class FriendList {
         this.userLogin = userLogin;
     };
 
-    public List<Friends> getFriendList(){
+    public List<UserInfo> getFriendList(){
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENT_UNIT_NAME);
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         logger.info("addMethod works");
-        Query query = entityManager.createQuery("SELECT f FROM Friends f WHERE f.userLogin = :userLoginParam");
-        query.setParameter("userLoginParam", this.userLogin);
-
-        return null;
+        TypedQuery<UserInfo> query = entityManager.createQuery("SELECT f.hisFriend FROM Friends f WHERE f.userLogin.userLogin = :userLoginParam", UserInfo.class);
+        query.setParameter("userLoginParam", userLogin);
+        return query.getResultList();
     }
 }

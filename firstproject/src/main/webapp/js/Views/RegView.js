@@ -1,5 +1,4 @@
 const Reg = Mn.View.extend({
-    //el: $('#main'),
     initialize(){
         this.template = _.template($('#regView').html())
     },
@@ -17,7 +16,6 @@ const Reg = Mn.View.extend({
         'error': 'errorReg'
     },
     toAuthorization(){
-        console.dir("To auth");
         router.navigate("auth", {trigger: true});
     },
     registration(){
@@ -35,6 +33,7 @@ const Reg = Mn.View.extend({
                 },
                 error: function(response) { // Данные не отправлены
                     console.log("Error");
+                    router.navigate("", {trigger: true});
                     alert('Something went wrong, try again');
                 }
             })

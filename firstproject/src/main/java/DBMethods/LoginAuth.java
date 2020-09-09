@@ -19,7 +19,7 @@ public class LoginAuth {
         this.password = password;
     }
 
-    public void dbMethod() {
+    public boolean dbMethod() {
         logger.info("DBMethod started now!");
 
         UserInfo user = new UserInfo();
@@ -28,9 +28,12 @@ public class LoginAuth {
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENT_UNIT_NAME);
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        ArrayList<UserInfo> people = new ArrayList<UserInfo>();
 
-        try {
+        UserInfo userInfo = entityManager.find(UserInfo.class, loginAuth);
+        logger.info(userInfo.getUserPassword() + " Check user password from db");
+        logger.warn(user.getUserPassword().equals(userInfo.getUserPassword()) + " LOOOOOOOOOOOOOOOOOOOOOOOCK");
+        return user.getUserPassword().equals(userInfo.getUserPassword());
+        /*try {
             Query query = entityManager.createQuery("SELECT l FROM UserInfo l WHERE l.userLogin = :userLoginParam");
             query.setParameter("userLoginParam", user.getUserLogin());
             UserInfo userLoginDB = (UserInfo) query.getSingleResult();
@@ -45,7 +48,7 @@ public class LoginAuth {
             logger.info("So what: " + loginAuth);
         }catch (Exception e){
             logger.warn("Error with DB query: " + e);
-        }
+        } */
     }
 
     public String getLoginAuth() {

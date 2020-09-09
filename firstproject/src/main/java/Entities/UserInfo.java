@@ -15,8 +15,8 @@ public class UserInfo {
     private String userLogin;
     @NotNull
     private String userPassword;
-    @OneToMany(mappedBy = "userInfo", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<Friends> friends = new HashSet<Friends>();
+    @OneToMany(mappedBy = "userLogin", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private Set<Friends> userInfo = new HashSet<Friends>();
     @OneToMany(mappedBy = "hisFriend", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Friends> hisFriends = new HashSet<Friends>();
 

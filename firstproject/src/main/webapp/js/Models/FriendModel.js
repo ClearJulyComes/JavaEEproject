@@ -1,15 +1,11 @@
 const Friend = Backbone.Model.extend({
         defaults: {
-                friendshipId:'',
-                hisFriend: '',
-                userLogin: ''
+                userLogin: '',
+                userPassword: ''
         }
 });
 
 const Friends = Backbone.Collection.extend({
     url: 'http://localhost:8080/firstproject_war/rest/friend/get',
-    model: Friend,
-    comparator: function(friend){
-        return friend.get('friendLogin');
-    }
+    model: Friend
 });

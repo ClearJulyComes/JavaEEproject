@@ -1,5 +1,9 @@
 package Controllers;
 
+import Entities.Friends;
+import Entities.UserInfo;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import org.apache.logging.log4j.LogManager;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +15,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+
 import DBMethods.*;
 import org.json.JSONObject;
 
@@ -28,7 +34,7 @@ public class FriendController {
         friendship.addMethod();
     };
 
-    @GET
+   /* @GET
     @Path("/get")
     public void sendFriendList(@Context HttpServletRequest request, @Context HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
@@ -43,20 +49,20 @@ public class FriendController {
                 .toString();
         out.print(jsonString);
         out.flush();
-    }
+    } */
     @GET
-    @Path("/get/friend")
+    @Path("/get")
     public void sendFriendList2(@Context HttpServletRequest request, @Context HttpServletResponse response) throws IOException {
-        HttpSession session = request.getSession();
-        String sessionLogin = (String) session.getAttribute("userLogin");
-        PrintWriter out = response.getWriter();
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        String jsonString = new JSONObject()
-                .put("friendshipId", "8")
-                .put("hisFriend", "Tolya")
-                .put("userLogin", "me")
-                .toString();
+        HttpSession session = request.getSession();
+        String sessionLogin = (String) session.getAttribute("userLogin");
+        FriendList friendList = new FriendList(sessionLogin);
+        List<UserInfo> myFriendsList = friendList.getFriendList();
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String jsonString = ow.writeValueAsString(myFriendsList);
+        PrintWriter out = response.getWriter();
+        logger.warn("OOOOOOOOOOOOOOOOOOOOOOOO " +jsonString);
         out.print(jsonString);
         out.flush();
     }

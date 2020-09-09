@@ -1,15 +1,14 @@
 const Wrapper = Mn.View.extend({
     template: _.template(`
+        <div id="menu"></div>
         <div id="main"></div>
-        <div id="firstPart"></div>
     `),
     regions:{
         mainRegion: '#main',
-        menuRegion: '#firstPart'
+        menuRegion: '#menu'
     },
     onRender() {
         console.log("render Wrapper");
         this.showChildView('menuRegion', new Menu());
-        //work.navigate('registration');
     }
 });

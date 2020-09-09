@@ -26,14 +26,11 @@ public class LoginController {
         HttpSession session = request.getSession();
         LoginAuth loginAuth;
         loginAuth = new LoginAuth(request.getParameter("login"), request.getParameter("password"));
-        loginAuth.dbMethod();
         logger.info("authMethod");
         PrintWriter writer = response.getWriter();
-        if(loginAuth.getLoginAuth() == null){
-            logger.info("isEmpty");
-            writer.println("shiiit");
+        if(!loginAuth.dbMethod()){
+            writer.println("error");
         }else {
-            logger.info("return true");
             writer.println("fine");
             session.setAttribute("userLogin", loginAuth.getLoginAuth());
         }

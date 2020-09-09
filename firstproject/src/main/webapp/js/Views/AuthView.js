@@ -1,5 +1,4 @@
 const Auth = Mn.View.extend({
-    //el: $('#main'),
     initialize(){
         this.template = _.template($('#authView').html())
     },
@@ -14,7 +13,6 @@ const Auth = Mn.View.extend({
     }
     ,
     toRegistration(){
-        console.log("Hey");
         router.navigate("", {trigger: true});
     },
     authorization(){
@@ -26,15 +24,20 @@ const Auth = Mn.View.extend({
                 type:     'POST', //метод отправки
                 dataType: 'text', //формат данных
                 data: $('#auth').serialize(),  // Сеарилизуем объект
-                success: function(response) { //Данные отправлены успешно
-                    console.log("Success");
-                    console.log(response);
-                    router.navigate("friends", {trigger: true});
+                success: function(response, xhr) { //Данные отправлены успешно
+                    console.log("Success AJAX");
+                    console.log(xhr.status);
+                    if($.trim(response) === "fine"){
+                        router.navigate("friends", {trigger: true});
+                    }else {
+                        alert('Wrong password');
+                        renderWrapperNewView(Auth);
+                    }
                 },
-                error: function(response) { // Данные не отправлены
-                    console.log("Error");
-                    console.log(response);
-                    alert('Something went wrong, try again');
+                error: function() { // Данные не отправлены
+                    console.log("Error AJAX");
+                    alert('Wrong user login');
+                    renderWrapperNewView(Auth);
                 }
             })
         });

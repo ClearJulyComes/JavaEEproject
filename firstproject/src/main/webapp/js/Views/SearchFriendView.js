@@ -15,17 +15,15 @@ const SearchFriend = Mn.View.extend({
                 dataType: 'text', //формат данных
                 data: $('#addFriend').serialize(),  // Сеарилизуем объект
                 success: function(response) { //Данные отправлены успешно
-                    console.log("Success");
-                    console.log(response);
-                    console.log("End add request");
-                    //myFriends.fetch();
-                    renderNewView(Profile);
-                    //Profile.renderSearch();
+                    console.log("Success add request");
+                    renderSearch();
+                    fetchFriendsContainer();
                 },
-                error: function(response) { // Данные не отправлены
-                    console.log("Error");
-                    console.log(response);
+                error: function() { // Данные не отправлены
+                    console.log("Error add request");
+                    renderSearch();
                     alert('Something went wrong, try again');
+
                 }
             });
         });
