@@ -79,7 +79,7 @@
             <form id="addFriend" method="post">
                 <table>
                     <tr>
-                        <td>Add to you friend list</td>
+                        <td>Add to your friend list</td>
                         <td colspan="2">
                             <input type="text" name="login" placeholder="login">
                         </td>

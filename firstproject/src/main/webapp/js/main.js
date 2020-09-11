@@ -1,25 +1,23 @@
 const MyApp = Mn.Application.extend({
     region: '#wrap'
 });
-
 const myApp = new MyApp();
-
 myApp.on('start', function() {
     Backbone.history.start({pushState: true, root: "/firstproject_war/"});
 });
-const wrapper = new Wrapper();
-myApp.showView(wrapper);
-const router = new Router();
-const profileView = new Profile();
 const friend1 = new Friend({
     userLogin: 'Ann',
     userPassword: 'oo'
 });
+const wrapper = new Wrapper();
+const router = new Router();
+const profileView = new Profile();
 const myFriends = new Friends(friend1);
+myApp.showView(wrapper);
 myFriends.fetch();
 const friendsContainer = new FriendsContainer({model: myFriends, initialize(){
-    this.model.on('sync', this.onRender(), this)}});
-//friendsContainer.model.on('sync', friendsContainer.onRender(), friendsContainer);
+    this.model.on('sync', this.onRender(), this);
+    this.model.on('change', this.onRender(), this)}});
 
 $('body').on('click', 'a[href^="/"]', function (e) {
     e.preventDefault();
@@ -44,13 +42,15 @@ function fetchFriendsContainer(){
         }
     });
 }
+function removeFriend(){
+    friendsContainer.model.remove();
+}
+
 function renderFriendsContainer() {
     profileView.showChildView('friendsRegion', friendsContainer);
 }
 
-
 function renderSearch(){
     profileView.showChildView('searchRegion', new SearchFriend());
 }
-
 myApp.start();

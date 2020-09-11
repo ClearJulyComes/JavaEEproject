@@ -3,6 +3,7 @@ package Entities;
 import javax.persistence.*;
 
 @Entity
+@Table(uniqueConstraints={@UniqueConstraint(columnNames={"userLogin", "hisFriend"})})
 public class Friends {
 
   @Id
@@ -11,16 +12,16 @@ public class Friends {
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "userLogin", nullable = false)
-  private UserInfo userLogin;
+  private Login userLogin;
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "hisFriend", nullable = false)
-  private UserInfo hisFriend;
+  private Login hisFriend;
 
   public Friends(){
 
   }
 
-  public Friends(UserInfo userLogin, UserInfo hisFriend) {
+  public Friends(Login userLogin, Login hisFriend) {
     this.userLogin = userLogin;
     this.hisFriend = hisFriend;
   }
@@ -29,11 +30,23 @@ public class Friends {
     return friendshipId;
   }
 
-  public UserInfo getUserLogin() {
+  public Login getUserLogin() {
     return userLogin;
   }
 
-  public UserInfo getHisFriend() {
+  public Login getHisFriend() {
     return hisFriend;
+  }
+
+  public void setFriendshipId(long friendshipId) {
+    this.friendshipId = friendshipId;
+  }
+
+  public void setUserLogin(Login userLogin) {
+    this.userLogin = userLogin;
+  }
+
+  public void setHisFriend(Login hisFriend) {
+    this.hisFriend = hisFriend;
   }
 }

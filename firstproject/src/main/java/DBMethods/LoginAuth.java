@@ -2,6 +2,7 @@ package DBMethods;
 
 import javax.persistence.*;
 
+import Entities.Login;
 import Entities.UserInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,8 +23,9 @@ public class LoginAuth {
     public boolean dbMethod() {
         logger.info("DBMethod started now!");
 
+        Login login = new Login(loginAuth);
         UserInfo user = new UserInfo();
-        user.setUserLogin(loginAuth);
+        user.setUserInfoLogin(login);
         user.setUserPassword(password);
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENT_UNIT_NAME);

@@ -8,7 +8,12 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <class>Entities.UserInfo</class>
+        <class>Entities.Login</class>
+        <class>Entities.Friends</class>
         <class>DBMethods.LoginReg</class>
+        <class>DBMethods.LoginAuth</class>
+        <class>DBMethods.FriendList</class>
+        <class>DBMethods.AddFriend</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" /> <!-- DB Driver -->

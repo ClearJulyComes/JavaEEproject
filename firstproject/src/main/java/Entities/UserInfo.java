@@ -12,23 +12,30 @@ import java.util.Set;
 public class UserInfo {
 
     @Id
-    private String userLogin;
+    private String user_id;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "userInfoLogin", nullable = false)
+    private Login userInfoLogin;
+
     @NotNull
     private String userPassword;
-    @OneToMany(mappedBy = "userLogin", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<Friends> userInfo = new HashSet<Friends>();
-    @OneToMany(mappedBy = "hisFriend", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<Friends> hisFriends = new HashSet<Friends>();
 
     public UserInfo(){
     }
 
-    public String getUserLogin() {
-        return userLogin;
+    public UserInfo(Login userInfoLogin, String userPassword){
+        this.user_id = userInfoLogin.getUserLogin();
+        this.userInfoLogin = userInfoLogin;
+        this.userPassword = userPassword;
     }
 
-    public void setUserLogin(String login) {
-        this.userLogin = login;
+    public Login getUserInfoLogin() {
+        return userInfoLogin;
+    }
+
+    public void setUserInfoLogin(Login userInfoLogin) {
+        this.userInfoLogin = userInfoLogin;
     }
 
     public String getUserPassword() {
