@@ -36,7 +36,6 @@
       <artifactId>hibernate-entitymanager</artifactId>
       <version>5.2.12.Final</version>
     </dependency>
-
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
@@ -48,11 +47,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <!--<dependency>
-      <artifactId>jboss-logging</artifactId>
-      <groupId>org.jboss.logging</groupId>
-      <version>3.2.0.Final</version>
-    </dependency> -->
     <!-- API, java.xml.bind module -->
     <dependency>
       <groupId>jakarta.xml.bind</groupId>
@@ -70,6 +64,12 @@
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
       <version>4.0.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.websocket</groupId>
+      <artifactId>javax.websocket-api</artifactId>
+      <version>1.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -112,7 +112,6 @@
       <artifactId>jackson-databind</artifactId>
       <version>2.11.2</version>
     </dependency>
-
   </dependencies>
 
   <build>

@@ -1,9 +1,12 @@
+let appRouter;
+
 const Router = Backbone.Router.extend({
 
     routes: {
         "auth":                 "auth",
         "":         "registration",
-        "friends":              "friends"
+        "friends":              "friends",
+        "message/:friendLogin": "message"
     },
 
     help: function() {
@@ -11,12 +14,18 @@ const Router = Backbone.Router.extend({
     },
 
     auth: function() {
-        renderWrapperNewView(Auth);
+        myApp.getView().showChildView('mainRegion', new Auth());
     },
     registration: function() {
-        renderWrapperNewView(Reg);
+        myApp.getView().showChildView('mainRegion', new Reg());
     },
     friends: function () {
-        renderProfileView();
+        myApp.getView().showChildView('mainRegion', profile);
+    },
+    message(friendLogin){
+        console.log("message view");
+        chatView.setFriendLogin(friendLogin);
+        chatView.fetchMessages();
+        myApp.getView().showChildView('mainRegion', chatView);
     }
 });

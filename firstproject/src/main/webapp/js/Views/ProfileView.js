@@ -12,9 +12,9 @@ const Profile = Mn.View.extend({
         }
     },
     onRender() {
-        renderFriendsContainer();
-        fetchFriendsContainer();
-        renderSearch();
+        this.showChildView('friendsRegion', friendsContainer);
+        friendsContainer.fetchFriendsContainer();
+        this.showChildView('searchRegion', new SearchFriend());
     }
 });
-
+const profile = new Profile();

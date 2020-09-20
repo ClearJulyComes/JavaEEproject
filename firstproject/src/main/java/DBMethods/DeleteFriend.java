@@ -1,7 +1,5 @@
 package DBMethods;
 
-import Entities.Friends;
-import Entities.Login;
 import org.apache.logging.log4j.LogManager;
 
 import javax.persistence.*;
@@ -20,16 +18,17 @@ public class DeleteFriend {
     public void deleteUserFriend(){
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENT_UNIT_NAME);
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        logger.info("Delete Method works");
-        Login userInfo = entityManager.find(Login.class, userLogin);
-        Login hisFriendInfo = entityManager.find(Login.class, hisFriend);
-        Query query = entityManager.createQuery("SELECT f FROM Friends f WHERE " +
-                "f.userLogin = :userLogin AND f.hisFriend = :hisFriend");
-        query.setParameter("userLogin", userInfo);
-        query.setParameter("hisFriend", hisFriendInfo);
-        Friends friendship = (Friends) query.getSingleResult();
+        logger.info("Delete Method works " + userLogin + " his friend: " + hisFriend);
+        //Login userInfo = entityManager.find(Login.class, userLogin);
+        //Login hisFriendInfo = entityManager.find(Login.class, hisFriend);
+        //Query query = entityManager.createQuery("SELECT f FROM Friends f WHERE " +
+        //        "f.userLogin = :userLogin AND f.hisFriend = :hisFriend");
+        Query query = entityManager.createQuery("DELETE FROM Friends f WHERE " +
+                "f.userLogin.userLogin IN (:userLogin, :hisFriend) AND f.hisFriend.userLogin IN (:hisFriend, :userLogin)");
+        query.setParameter("userLogin", userLogin);
+        query.setParameter("hisFriend", hisFriend);
         entityManager.getTransaction().begin();
-        entityManager.remove(friendship);
+        query.executeUpdate();
         entityManager.getTransaction().commit();
         entityManager.close();
     }

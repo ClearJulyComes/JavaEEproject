@@ -26,16 +26,11 @@ public class Friends {
     this.hisFriend = hisFriend;
   }
 
-  public long getFriendshipId() {
-    return friendshipId;
+  public String getHisFriend() {
+    return hisFriend.getUserLogin();
   }
-
-  public Login getUserLogin() {
-    return userLogin;
-  }
-
-  public Login getHisFriend() {
-    return hisFriend;
+  public String getUserLogin() {
+    return userLogin.getUserLogin();
   }
 
   public void setFriendshipId(long friendshipId) {

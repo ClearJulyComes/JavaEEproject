@@ -26,7 +26,7 @@ import org.json.JSONObject;
 public class FriendController {
     private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(FriendController.class);
 
-    @POST
+    /*@POST
     @Path("/add")
     public void addFriend (@Context HttpServletRequest request, @Context HttpServletResponse response) throws IOException {
         response.setContentType("text;charset=UTF-8");
@@ -38,7 +38,7 @@ public class FriendController {
         }else {
             response.sendError(500);
         }
-    };
+    }; */
 
     @POST
     @Path("/delete")
@@ -58,11 +58,9 @@ public class FriendController {
         HttpSession session = request.getSession();
         String sessionLogin = (String) session.getAttribute("userLogin");
         FriendList friendList = new FriendList(sessionLogin);
-        //List<UserInfo> myFriendsList = friendList.getFriendList();
         List<Login> myFriendsList = friendList.getFriendList();
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String jsonString = ow.writeValueAsString(myFriendsList);
-        //String jsonString = new JSONObject().toString();
         PrintWriter out = response.getWriter();
         out.print(jsonString);
         out.flush();

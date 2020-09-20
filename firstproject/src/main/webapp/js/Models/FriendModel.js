@@ -1,6 +1,6 @@
 const Friend = Backbone.Model.extend({
         defaults: {
-                userLogin: ''
+            userLogin: ''
         }
 });
 

@@ -10,14 +10,7 @@
         <script src="https://github.com/marionettejs/backbone.radio.git"></script>
         <script src="./js/backbone.marionette.js"></script>
         <script type="text/javascript" src="./js/Models/FriendModel.js"></script>
-        <script type="text/javascript" src="./js/Views/MenuView.js"></script>
-        <script type="text/javascript" src="./js/Views/Wrapper.js"></script>
-        <script type="text/javascript" src="./js/Views/AuthView.js"></script>
-        <script type="text/javascript" src="./js/Views/RegView.js"></script>
-        <script type="text/javascript" src="./js/Views/SearchFriendView.js"></script>
-        <script type="text/javascript" src="./js/Views/FriendsContainerView.js"></script>
-        <script type="text/javascript" src="./js/Views/ProfileView.js"></script>
-        <script type="text/javascript" src="./js/Router/Router.js"></script>
+        <script type="text/javascript" src="./js/Models/MessageModel.js"></script>
     </head>
     <body>
         <div id="wrap">Ok lets start</div>
@@ -27,7 +20,7 @@
                         <tr>
                             <td>Login</td>
                             <td colspan="2">
-                                <input type="text" name="login" placeholder="login">
+                                <input type="text" name="login" placeholder="login" id="loginAuth">
                             </td>
                         </tr>
                         <tr>
@@ -54,7 +47,7 @@
                         <tr>
                             <td>Login</td>
                             <td colspan="2">
-                                <input type="text" name="login" placeholder="login" id="login">
+                                <input type="text" name="login" placeholder="login" id="loginReg">
                             </td>
                         </tr>
                         <tr>
@@ -95,7 +88,23 @@
                 </table>
             </form>
         </script>
+        <script id="textMsg" type="text/template">
+            <input type="text" name="login" placeholder="Type your message">
+            <button id="sendMessage"> Send </button>
+        </script>
         <script id="friendListContainer" type="text/template">Test <div id="friendListUL">yuiojk</div></script>
-        <script type="text/javascript" src="./js/main.js"></script>
+        <script type="text/javascript" src="./js/Views/MenuView.js"></script>
+        <script type="text/javascript" src="./js/Views/Wrapper.js"></script>
+        <script type="text/javascript" src="./js/Views/AuthView.js"></script>
+        <script type="text/javascript" src="./js/Views/RegView.js"></script>
+        <script type="text/javascript" src="./js/Views/SearchFriendView.js"></script>
+        <script type="text/javascript" src="./js/Views/FriendsContainerView.js"></script>
+        <script type="text/javascript" src="./js/Views/TextMessageView.js"></script>
+        <script type="text/javascript" src="./js/Views/ChatView.js"></script>
+        <script type="text/javascript" src="./js/Views/ProfileView.js"></script>
+        <script type="text/javascript" src="./js/Router/Router.js"></script>
+        <script type="text/javascript" src="./js/webSocket.js"></script>
+        <script type="text/javascript" src="./js/FriendWebSocket.js"></script>
+        <script type="text/javascript" src="./js/app.js"></script>
     </body>
 </html>

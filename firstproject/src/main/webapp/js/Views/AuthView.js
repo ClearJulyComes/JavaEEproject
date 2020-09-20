@@ -13,7 +13,7 @@ const Auth = Mn.View.extend({
     }
     ,
     toRegistration(){
-        router.navigate("", {trigger: true});
+        appRouter.navigate("", {trigger: true});
     },
     authorization(){
         $('#auth').submit(function (e) {
@@ -27,20 +27,22 @@ const Auth = Mn.View.extend({
                 success: function(response, xhr) { //Данные отправлены успешно
                     console.log("Success AJAX");
                     console.log(xhr.status);
+                    userUrl = $("#loginAuth").val();
+                    friendWebSocket();
+                    console.log(userUrl + " url");
                     if($.trim(response) === "fine"){
-                        router.navigate("friends", {trigger: true});
+                        appRouter.navigate("friends", {trigger: true});
                     }else {
                         alert('Wrong password');
-                        renderWrapperNewView(Auth);
+                        myApp.getView().showChildView('mainRegion', new Auth());
                     }
                 },
                 error: function() { // Данные не отправлены
                     console.log("Error AJAX");
                     alert('Wrong user login');
-                    renderWrapperNewView(Auth);
+                    myApp.getView().showChildView('mainRegion', new Auth());
                 }
             })
         });
     }
-
 });

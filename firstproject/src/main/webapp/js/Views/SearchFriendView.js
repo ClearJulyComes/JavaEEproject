@@ -7,25 +7,8 @@ const SearchFriend = Mn.View.extend({
     addingFriend(){
         $('#addFriend').submit(function (e) {
             e.preventDefault();
-
-            console.log("Start add request");
-            $.ajax({
-                url:   '/firstproject_war/rest/friend/add'  , //url страницы (action_ajax_form.php)
-                type:     'POST', //метод отправки
-                dataType: 'text', //формат данных
-                data: $('#addFriend').serialize(),  // Сеарилизуем объект
-                success: function(response) { //Данные отправлены успешно
-                    console.log("Success add request");
-                    renderSearch();
-                    fetchFriendsContainer();
-                },
-                error: function() { // Данные не отправлены
-                    console.log("Error add request");
-                    renderSearch();
-                    alert('Something went wrong, try again');
-
-                }
-            });
+            friendSocket.send($("#addFriend").serialize());
+            profile.showChildView('searchRegion', new SearchFriend());
         });
     }
 });

@@ -1,6 +1,8 @@
 const FriendsContainer = Mn.View.extend({
+    model: new Friends,
     initialize(){
         this.template = _.template($('#friendListContainer').html());
+        this.model.on('sync', this.onRender(), this);
     },
     onRender(){
         console.log("render on Sync");
@@ -16,38 +18,67 @@ const FriendsContainer = Mn.View.extend({
             model: friend
         });
         $(this.el).find("#friendListUL").append(newFriend.render().el);
+    },
+    fetchFriendsContainer(){
+        const self = this;
+        this.model.fetch({
+            success: function (response) {
+                console.log(response + " success fetch")
+                self.onRender();
+            },
+            error: function () {
+                console.log("error fetch")
+            }
+        });
+    },
+    addFriend(data){
+        const self = this;
+        const friendModel = new Friend({
+            userLogin: JSON.parse(data).hisFriend
+        });
+        this.model.add(friendModel);
+        this.onRender();
+    },
+    deleteFriend(data){
+        const self = this;
+        _.each(this.model.toArray(), function(friend){
+            console.log("Friend name: " + friend.toJSON().userLogin);
+            console.log("Friend JSON name: " + JSON.parse(data).hisFriend);
+            if (friend.toJSON().userLogin === JSON.parse(data).hisFriend) {
+                console.log("Removed");
+                self.model.remove(friend);
+            }
+        });
+        this.onRender();
     }
 });
+const friendsContainer = new FriendsContainer();
 
 const FriendView = Mn.View.extend({
     tagName: "div",
     initialize(){
         this.template = _.template(`<span> <%= userLogin %> </span>
-            <button>Write</button>
+            <button class="writeButton">Write</button>
             <button class="deleteFriendButton">Delete</button>`)
     },
-    ui: {deleteButton : '.deleteFriendButton'},
-    events: {'click @ui.deleteButton' : 'deleteFriend'},
+    ui: {
+        deleteButton : '.deleteFriendButton',
+        writeButton : '.writeButton'
+    },
+    events: {
+        'click @ui.deleteButton' : 'deleteFriend',
+        'click @ui.writeButton' : 'writeButton'
+    },
     render:function() {
         this.$el.html(this.template(this.model.toJSON()));
         return this;
     },
     deleteFriend(){
         const self = this;
-        $.ajax({
-            url:   '/firstproject_war/rest/friend/delete'  , //url страницы (action_ajax_form.php)
-            type:     'POST', //метод отправки
-            dataType: 'text', //формат данных
-            data: this.model.toJSON(),  // Сеарилизуем объект
-            success: function(response) { //Данные отправлены успешно
-                console.log("Success delete request");
-                self.remove();
-            },
-            error: function() { // Данные не отправлены
-                console.log("Error delete request");
-                alert('Something went wrong, try again');
-
-            }
-        });
+        friendSocket.send(JSON.stringify(this.model.toJSON()));
+    },
+    writeButton(){
+        const self = this;
+        appRouter.navigate("message/"+self.model.toJSON().userLogin, {trigger: true});
     }
 });

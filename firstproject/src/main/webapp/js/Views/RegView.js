@@ -16,7 +16,7 @@ const Reg = Mn.View.extend({
         'error': 'errorReg'
     },
     toAuthorization(){
-        router.navigate("auth", {trigger: true});
+        appRouter.navigate("auth", {trigger: true});
     },
     registration(){
         $('#reg').submit(function (e) {
@@ -29,11 +29,14 @@ const Reg = Mn.View.extend({
                 data: $('#reg').serialize(),  // Сеарилизуем объект
                 success: function(response) { //Данные отправлены успешно
                     console.log("Success");
-                    router.navigate("friends", {trigger: true});
+                    userUrl = $("#loginReg").val();
+                    console.log(userUrl + " url");
+                    friendWebSocket();
+                    appRouter.navigate("friends", {trigger: true});
                 },
                 error: function(response) { // Данные не отправлены
                     console.log("Error");
-                    router.navigate("", {trigger: true});
+                    appRouter.navigate("", {trigger: true});
                     alert('Something went wrong, try again');
                 }
             })
