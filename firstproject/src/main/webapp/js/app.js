@@ -1,12 +1,11 @@
-const App = Mn.Application.extend({
-    region: '#wrap',
-    userName: '',
-    onStart() {
-        this.showView(new Wrapper());
-        appRouter = new Router();
-        Backbone.history.start();
-    }
-});
-
-const myApp = new App();
-myApp.start();
+    const App = Mn.Application.extend({
+        region: '#wrap',
+        userName: '',
+        onStart() {
+            this.showView(wrapper);
+            appRouter = new Router();
+            Backbone.history.start();
+        }
+    });
+    let myApp = new App();
+    myApp.start();

@@ -1,24 +1,24 @@
-let socket = new WebSocket("ws://localhost:8080/firstproject_war/messages/" + userUrl);
+let socket;
 
-socket.onopen = function(e) {
-    console.log("Open socket connection")
-    //socket.send("Меня зовут Джон");
-};
+function messageWebSocket() {
+    socket = new WebSocket("ws://localhost:8080/firstproject_war/messages/" + userUrl);
+    socket.onopen = function (e) {
+        console.log("Open socket connection")
+    };
 
-socket.onmessage = function(event) {
-    //alert(`[message] Данные получены с сервера: ${event.data}`);
-    console.log("Get message from the serv");
-    console.log(event.data.hisFriend + " data1");
-    if(event.data.hisFriend === undefined){
-        chatView.addMessage(event.data);
-        
-    }
-};
+    socket.onmessage = function (event) {
+        console.log("Get message from the serv");
+        console.log(event.data + " data1");
+        if(JSON.parse(event.data).status === "send"){
+            chatView.addMessage(event.data);
+        }
+    };
 
-socket.onclose = function(event) {
-    console.log("Close the connection");
-};
+    socket.onclose = function (event) {
+        console.log("Close the connection");
+    };
 
-socket.onerror = function(error) {
-    alert(`[error] ${error.message}`);
-};
+    socket.onerror = function (error) {
+        alert(`[error] ${error.message}`);
+    };
+}

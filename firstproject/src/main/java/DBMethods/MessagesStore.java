@@ -11,7 +11,7 @@ import javax.persistence.Query;
 
 public class MessagesStore {
     private static final String PERSISTENT_UNIT_NAME = "UnitName";
-    private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(AddFriend.class);
+    private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(MessagesStore.class);
     private String userLogin;
     private String hisFriend;
     private String msg;
@@ -33,9 +33,14 @@ public class MessagesStore {
         entityManager.getTransaction().begin();
         entityManager.persist(messageEntity);
         entityManager.getTransaction().commit();
-        Query query = entityManager.createQuery("SELECT m.messageId FROM MessageEntity m WHERE m.msg= :msg");
-        query.setParameter("msg", msg);
+        logger.warn("Ok");
+        Query query = entityManager.createQuery("SELECT MAX (m.messageId) FROM MessageEntity m WHERE " +
+                "m.userLogin.userLogin IN (:userLoginParam, :hisFriendParam) AND m.hisFriend.userLogin IN (:userLoginParam," +
+                " :hisFriendParam) ");
+        query.setParameter("userLoginParam", userLogin);
+        query.setParameter("hisFriendParam", hisFriend);
         id = (Long) query.getSingleResult();
+        logger.warn("Fine");
         entityManager.close();
     }
 

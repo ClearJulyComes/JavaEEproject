@@ -21,7 +21,7 @@ public class MessageWS {
     private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(MessageWS.class);
     private static Set<MessageWS> chatEndpoints
             = new CopyOnWriteArraySet<>();
-    private static HashMap<Session, String> users = new HashMap<>();
+    private static HashMap<String, Session> users = new HashMap<>();
 
     public MessageWS(){
 
@@ -30,26 +30,31 @@ public class MessageWS {
     @OnOpen
     public void onOpen (Session session, @PathParam("username") String username){
         chatEndpoints.add(this);
-        users.put(session, username);
+        users.put(username, session);
         logger.warn("COOOOOONNNNNNECTED");
     }
 
     @OnMessage
     public void onMessage(Session session, String message) throws IOException {
         logger.warn(message);
+        JSONObject jsonObject = new JSONObject(message);
         try {
-            JSONObject jsonObject = new JSONObject(message);
-        logger.warn(jsonObject.getString("to") + " MESSSSSSSSSSSSSSSSSSSSSSSSages "
-                + jsonObject.getString("from"));
-        MessagesStore messagesStore = new MessagesStore(jsonObject.getString("from"),
-                jsonObject.getString("to"), jsonObject.getString("message"));
-        messagesStore.saveMessage();
-        logger.warn("After save");
-        Store store = new Store(messagesStore.getUserLogin(), messagesStore.getId());
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        String jsonString = ow.writeValueAsString(store);
-        logger.warn("PPPPPPPPPPPPPPPPPPPPP Okii " + jsonString);
-        session.getBasicRemote().sendText(jsonString);
+            if(jsonObject.getString("status").equals("send")) {
+                logger.warn(jsonObject.getString("hisFriend") + " MESSSSSSSSSSSSSSSSSSSSSSSSages "
+                        + jsonObject.getString("userLogin"));
+                MessagesStore messagesStore = new MessagesStore(jsonObject.getString("userLogin"),
+                        jsonObject.getString("hisFriend"), jsonObject.getString("msg"));
+                messagesStore.saveMessage();
+                logger.warn("After save");
+                jsonObject.put("messageId", messagesStore.getId());
+                logger.warn("Okii " + jsonObject.toString());
+                session.getBasicRemote().sendText(jsonObject.toString());
+                try {
+                    users.get(jsonObject.getString("hisFriend")).getBasicRemote().sendText(jsonObject.toString());
+                }catch (Exception e){
+                    logger.warn("Exception: " + e);
+                }
+            }
         }catch (JSONException err){
             logger.warn("Error");
         }

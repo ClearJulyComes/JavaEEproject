@@ -11,3 +11,5 @@ const Messages = Backbone.Collection.extend({
     url: 'http://localhost:8080/firstproject_war/rest/messages/get',
     model: Message
 });
+
+let messages = new Messages();

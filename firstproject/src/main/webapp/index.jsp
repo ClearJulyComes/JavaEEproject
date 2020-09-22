@@ -6,10 +6,10 @@
         <script src="./js/jquery-3.5.1.js"></script>
         <script src="./js/underscore.js"></script>
         <script src="./js/underscore.js.map"></script>
-        <script src="./js/backbone.js"></script>
+        <script src="js/backbone.js"></script>
         <script src="https://github.com/marionettejs/backbone.radio.git"></script>
         <script src="./js/backbone.marionette.js"></script>
-        <script type="text/javascript" src="./js/Models/FriendModel.js"></script>
+        <script type="text/javascript"  src="./js/Models/FriendModel.js"></script>
         <script type="text/javascript" src="./js/Models/MessageModel.js"></script>
     </head>
     <body>
@@ -92,7 +92,7 @@
             <input type="text" name="login" placeholder="Type your message">
             <button id="sendMessage"> Send </button>
         </script>
-        <script id="friendListContainer" type="text/template">Test <div id="friendListUL">yuiojk</div></script>
+        <script id="friendListContainer" type="text/template">Test <div id="friendListUL"></div></script>
         <script type="text/javascript" src="./js/Views/MenuView.js"></script>
         <script type="text/javascript" src="./js/Views/Wrapper.js"></script>
         <script type="text/javascript" src="./js/Views/AuthView.js"></script>

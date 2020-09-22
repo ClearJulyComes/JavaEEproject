@@ -1,10 +1,10 @@
 const Auth = Mn.View.extend({
-    initialize(){
+    initialize() {
         this.template = _.template($('#authView').html())
     },
     events: {
-        'click @ui.toReg' : 'toRegistration',
-        'click @ui.auth' : 'authorization',
+        'click @ui.toReg': 'toRegistration',
+        'click @ui.auth': 'authorization',
     }
     ,
     ui: {
@@ -12,32 +12,32 @@ const Auth = Mn.View.extend({
         auth: '#authButton'
     }
     ,
-    toRegistration(){
+    toRegistration() {
         appRouter.navigate("", {trigger: true});
     },
-    authorization(){
+    authorization() {
         $('#auth').submit(function (e) {
             e.preventDefault();
 
             $.ajax({
-                url:   '/firstproject_war/rest/log/auth'  , //url страницы (action_ajax_form.php)
-                type:     'POST', //метод отправки
+                url: '/firstproject_war/rest/log/auth', //url страницы (action_ajax_form.php)
+                type: 'POST', //метод отправки
                 dataType: 'text', //формат данных
                 data: $('#auth').serialize(),  // Сеарилизуем объект
-                success: function(response, xhr) { //Данные отправлены успешно
+                success: function (response) { //Данные отправлены успешно
                     console.log("Success AJAX");
-                    console.log(xhr.status);
                     userUrl = $("#loginAuth").val();
-                    friendWebSocket();
                     console.log(userUrl + " url");
-                    if($.trim(response) === "fine"){
+                    if ($.trim(response) === "fine") {
+                        messages.fetch();
+                        friends.fetch();
                         appRouter.navigate("friends", {trigger: true});
-                    }else {
+                    } else {
                         alert('Wrong password');
                         myApp.getView().showChildView('mainRegion', new Auth());
                     }
                 },
-                error: function() { // Данные не отправлены
+                error: function () { // Данные не отправлены
                     console.log("Error AJAX");
                     alert('Wrong user login');
                     myApp.getView().showChildView('mainRegion', new Auth());

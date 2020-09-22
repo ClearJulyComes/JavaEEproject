@@ -30,7 +30,7 @@ public class MessagesController {
         response.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
         String sessionLogin = (String) session.getAttribute("userLogin");
-        GetMessagesClass getMessagesClass = new GetMessagesClass(sessionLogin, request.getParameter("userTo"));
+        GetMessagesClass getMessagesClass = new GetMessagesClass(sessionLogin);
         List<MessageEntity> myMessages = getMessagesClass.getMessagesMethod();
         logger.warn(myMessages.size());
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();

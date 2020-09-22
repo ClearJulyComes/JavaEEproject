@@ -2,11 +2,9 @@ let friendSocket;
 function friendWebSocket() {
     friendSocket = new WebSocket("ws://localhost:8080/firstproject_war/friends/" + userUrl);
     friendSocket.onopen = function(e) {
-        console.log("Open socket connection");
+        console.log("Open friend socket connection");
     };
     friendSocket.onmessage = function(event) {
-        console.log("Get message from the serv Friend");
-        console.log(event.data + " data1");
         if(JSON.parse(event.data).status === "added"){
             friendsContainer.addFriend(event.data);
         }else if(JSON.parse(event.data).status === "deleted"){
