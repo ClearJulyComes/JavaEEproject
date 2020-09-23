@@ -29,8 +29,7 @@ const Auth = Mn.View.extend({
                     userUrl = $("#loginAuth").val();
                     console.log(userUrl + " url");
                     if ($.trim(response) === "fine") {
-                        messages.fetch();
-                        friends.fetch();
+                        fetchAll();
                         appRouter.navigate("friends", {trigger: true});
                     } else {
                         alert('Wrong password');

@@ -42,7 +42,8 @@
         },
         sendNewMessage: function () {
             const newMessage = new Message({
-                msg: $("#messageTextBox").val(),
+                msg: $("#messageTextBox").val().replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;"),
                 userLogin: userUrl,
                 hisFriend: this.friendLogin,
                 messageId: ''
@@ -71,7 +72,6 @@
         }
     });
     let chatView = new ChatView();
-    messages.on('sync', chatView.onRender());
 
     const MessageView = Mn.View.extend({
         tagName: "div",

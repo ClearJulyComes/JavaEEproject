@@ -1,6 +1,11 @@
 const Friend = Backbone.Model.extend({
     defaults: {
         userLogin: ''
+    },
+    validate:function (attr) {
+        if(!attr.userLogin){
+            return "Field is empty"
+        }
     }
 });
 const Friends = Backbone.Collection.extend({
@@ -8,3 +13,6 @@ const Friends = Backbone.Collection.extend({
     model: Friend
 });
 let friends = new Friends();
+friends.on('error', function (model, error) {
+    alert(error);
+});

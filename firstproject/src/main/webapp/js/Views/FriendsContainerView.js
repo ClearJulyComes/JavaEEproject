@@ -23,6 +23,7 @@
                 userLogin: JSON.parse(data).hisFriend
             });
             this.model.add(friendModel);
+            messages.fetch();
             this.onRender();
         },
         deleteFriend(data) {
@@ -39,7 +40,6 @@
         }
     });
     let friendsContainer = new FriendsContainer();
-    friends.on('sync', friendsContainer.onRender());
 
     const FriendView = Mn.View.extend({
         tagName: "div",

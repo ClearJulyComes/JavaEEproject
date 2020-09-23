@@ -7,7 +7,8 @@
         addingFriend() {
             $('#addFriend').submit(function (e) {
                 e.preventDefault();
-                friendSocket.send($("#addFriend").serialize());
+                friendSocket.send($("#addFriend").serialize().replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;"));
                 profile.showChildView('searchRegion', new SearchFriend());
             });
         }

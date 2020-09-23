@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GetMessagesClass {
@@ -19,14 +20,23 @@ public class GetMessagesClass {
     };
 
     public List<MessageEntity> getMessagesMethod(){
+        List<MessageEntity> messages = new ArrayList<>();
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENT_UNIT_NAME);
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        logger.info("Method works");
+        TypedQuery<Login> query = entityManager.createQuery("SELECT f.hisFriend FROM Friends f WHERE " +
+                "f.userLogin.userLogin = :userLoginParam", Login.class);
+        query.setParameter("userLoginParam", userLogin);
+        List<Login> myFriendsList = query.getResultList();
         TypedQuery<MessageEntity> queryMsg = entityManager.createQuery("SELECT m FROM MessageEntity m WHERE" +
-                " m.userLogin.userLogin = :userLoginParam OR m.hisFriend.userLogin = :userLoginParam", MessageEntity.class);
-
-        logger.warn(queryMsg + " okk");
+                " m.userLogin.userLogin IN(:userLoginParam, :friendLogin) AND m.hisFriend.userLogin IN " +
+                "(:userLoginParam, :friendLogin) ORDER BY m.messageId DESC", MessageEntity.class);
         queryMsg.setParameter("userLoginParam", userLogin);
-        return queryMsg.getResultList();
+        for(Login friend: myFriendsList){
+            queryMsg.setParameter("friendLogin", friend.getUserLogin());
+            queryMsg.setMaxResults(20);
+            messages.addAll(queryMsg.getResultList());
+        }
+        logger.info("Method works");
+        return messages;
     }
 }

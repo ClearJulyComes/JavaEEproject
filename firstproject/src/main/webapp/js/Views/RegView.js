@@ -31,8 +31,7 @@
                         console.log("Success");
                         userUrl = $("#loginReg").val();
                         console.log(userUrl + " url");
-                        messages.fetch();
-                        friends.fetch();
+                        fetchAll();
                         appRouter.navigate("friends", {trigger: true});
                     },
                     error: function (response) { // Данные не отправлены

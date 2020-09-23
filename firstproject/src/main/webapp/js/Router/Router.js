@@ -76,21 +76,18 @@
             }
             chatView.setFriendLogin(friendLogin);
             console.log("friendLogin " + friendLogin);
-            _.each(friendsContainer.model.toArray(), function (friend) {
-                console.log("message each " + friend.toJSON().userLogin);
-                if (friend.toJSON().userLogin === friendLogin) {
-                    if (userUrl !== undefined) {
-                        if (friendSocket === undefined) {
-                            friendWebSocket();
-                            messageWebSocket();
-                        }
-                        console.log("check +");
-                        wrapper.showChildView('mainRegion', chatView);
-                    } else {
-                        this.checkWebSocket(chatView);
-                    }
+            if (userUrl !== undefined) {
+                if (friendSocket === undefined) {
+                    friendWebSocket();
+                    messageWebSocket();
                 }
-            });
+                if(friends.findWhere({userLogin: chatView.friendLogin}).toJSON().userLogin===chatView.friendLogin) {
+                    console.log("check +");
+                    wrapper.showChildView('mainRegion', chatView);
+                }
+            } else {
+                this.checkWebSocket(chatView);
+            }
         },
         checkWebSocket(data, second) {
 
@@ -119,8 +116,16 @@
                         if (data === chatView) {
                             messages.fetch({
                                 success: function (response) {
+                                    messages.sortByField('messageId');
                                     console.log(response + " success fetch chat");
-                                    wrapper.showChildView('mainRegion', data);
+
+                                    if(friends.findWhere({userLogin: chatView.friendLogin}).toJSON().userLogin ===
+                                        chatView.friendLogin){
+                                        wrapper.showChildView('mainRegion', data);
+                                    }else {
+                                        appRouter.navigate("auth", {trigger: false});
+                                        wrapper.showChildView('mainRegion', new Auth());
+                                    }
                                 },
                                 error: function () {
                                     console.log("error fetch")
@@ -137,7 +142,11 @@
                                     console.log("error fetch")
                                 }
                             });
-                            messages.fetch();
+                            messages.fetch({
+                                success:function () {
+                                    messages.sortByField('messageId');
+                                }
+                            });
                         }
                     }
                 },
@@ -149,3 +158,24 @@
             });
         }
     });
+    function fetchAll(){
+        messages.fetch({
+            success: function (response) {
+                console.log("Success message fetch");
+                messages.sortByField('messageId');
+                chatView.onRender();
+            },
+            error: function () {
+                console.log("Error message fetch")
+            }
+        });
+        friends.fetch({
+            success: function (response) {
+                console.log("Success friends fetch");
+                friendsContainer.onRender();
+            },
+            error: function () {
+                console.log("Error friend fetch");
+            }
+        });
+    }
