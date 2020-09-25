@@ -1,3 +1,6 @@
+---
+permalink: /index.html
+---
 # FirstEEproject
 
 ## Проект single page application веб-приложения на платформе Java EE.
