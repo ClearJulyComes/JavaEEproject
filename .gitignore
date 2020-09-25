@@ -1,7 +1,7 @@
 
-firstproject/.idea/artifacts/firstproject_war.xml
+firstproject/docs/.idea/artifacts/firstproject_war.xml
 /jax-rstraining
-/firstproject/target
-/firstproject/.idea
-/firstproject/firstproject.iml
-/firstproject/*.log
+/firstproject/docs/target
+/firstproject/docs/.idea
+/firstproject/docs/firstproject.iml
+/firstproject/docs/*.log
