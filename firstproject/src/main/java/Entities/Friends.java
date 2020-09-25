@@ -2,6 +2,9 @@ package Entities;
 
 import javax.persistence.*;
 
+/**
+ * Сущность дружбы между пользователем и его другом
+ */
 @Entity
 @Table(uniqueConstraints={@UniqueConstraint(columnNames={"userLogin", "hisFriend"})})
 public class Friends {

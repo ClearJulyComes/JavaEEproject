@@ -1,10 +1,13 @@
 var userUrl;
 
 const Menu = Mn.View.extend({
-    tagName: 'div',
-    className: 'menuClass',
-    template: _.template(`<div id="profileMenu">Minimal</div><div id="friendsMenu">Friends</div>
-        <div id="exitMenu"><button id="exitButton">Exit</button> </div>`),
+    template: _.template(`<ul class="navbar-nav">
+            <li class="nav-item ml-2"><img src="/firstproject_war/favicon.png" 
+            class="img-fluid" width="50" height="50" alt="Responsive image"></li>
+            <li class="navbar-brand mr-3 ml-2" id="profileMenu">Minimal</li>
+            <li class="nav-item ml-2" id="friendsMenu">Friends</li>
+            <li class="nav-item ml-2"  id="exitMenu"><button id="exitButton" class="btn btn-light">Exit</button></li>
+        </ul>`),
     events: {
         'click @ui.exitButton' : 'exitMethod',
         'click @ui.friendsButton' : 'friendsMethod'
@@ -14,14 +17,12 @@ const Menu = Mn.View.extend({
         friendsButton : '#friendsMenu'
     },
     exitMethod(){
-        console.log("Exit button pushed");
         $.ajax({
-            url:   '/firstproject_war/rest/log/logout'  , //url страницы (action_ajax_form.php)
-            type:     'POST', //метод отправки
-            dataType: 'text', //формат данных
-            data: "Check",  // Сеарилизуем объект
-            success: function(response) { //Данные отправлены успешно
-                console.log("Success AJAX exit");
+            url:   '/firstproject_war/rest/log/logout'  ,
+            type:     'POST',
+            dataType: 'text',
+            data: "Check",
+            success: function(response) {
                 userUrl = undefined;
                 socket.close;
                 friendSocket.close;
@@ -35,12 +36,9 @@ const Menu = Mn.View.extend({
     friendsMethod(){
         appRouter.navigate("", {trigger: false});
         if (friendsContainer.isDestroyed()) {
-            console.log("is destr");
             friendsContainer = new FriendsContainer();
         }
         if (profile.isDestroyed()) {
-            console.log("Profile1 is attached  " + profile.isAttached() + ", is Destroyed " + profile.isDestroyed() +
-                ", is Rendered " + profile.isRendered());
             profile = new Profile();
         }
         wrapper.showChildView('mainRegion', profile);

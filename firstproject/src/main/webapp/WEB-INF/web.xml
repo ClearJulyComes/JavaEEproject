@@ -11,14 +11,4 @@
         <param-value>/rest</param-value>
     </context-param>
 
-    <filter>
-        <filter-name>FilterDemo</filter-name>
-        <filter-class>Controllers.AuthFilter</filter-class>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>FilterDemo</filter-name>
-        <url-pattern>/</url-pattern>
-    </filter-mapping>
-
 </web-app>

@@ -4,6 +4,9 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 
+/**
+ * Сущность сообщения
+ */
 @Entity
 public class MessageEntity {
 

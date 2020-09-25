@@ -1,4 +1,6 @@
     const Reg = Mn.View.extend({
+        tagName: 'div',
+        className: 'align-self-center',
         initialize() {
             this.template = _.template($('#regView').html())
         },
@@ -23,19 +25,17 @@
                 e.preventDefault();
 
                 $.ajax({
-                    url: '/firstproject_war/rest/log/reg', //url страницы (action_ajax_form.php)
-                    type: 'POST', //метод отправки
-                    dataType: 'application/json', //формат данных
-                    data: $('#reg').serialize(),  // Сеарилизуем объект
-                    success: function (response) { //Данные отправлены успешно
-                        console.log("Success");
+                    url: '/firstproject_war/rest/log/reg',
+                    type: 'POST',
+                    dataType: 'application/json',
+                    data: $('#reg').serialize().replace(/</g, "&lt;")
+                        .replace(/>/g, "&gt;"),
+                    success: function (response) {
                         userUrl = $("#loginReg").val();
-                        console.log(userUrl + " url");
                         fetchAll();
                         appRouter.navigate("friends", {trigger: true});
                     },
-                    error: function (response) { // Данные не отправлены
-                        console.log("Error");
+                    error: function (response) {
                         appRouter.navigate("", {trigger: true});
                         alert('Something went wrong, try again');
                     }

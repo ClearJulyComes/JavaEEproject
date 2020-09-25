@@ -14,5 +14,5 @@ const Friends = Backbone.Collection.extend({
 });
 let friends = new Friends();
 friends.on('error', function (model, error) {
-    alert(error);
+    alert("Error, sorry!");
 });

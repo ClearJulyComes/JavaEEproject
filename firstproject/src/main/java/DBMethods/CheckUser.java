@@ -3,12 +3,13 @@ package DBMethods;
 import Entities.UserInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import java.sql.SQLException;
 
+/**
+ * Класс для проверки на существование пользователя в БД.
+ */
 public class CheckUser {
     private static final Logger logger = LogManager.getLogger(LoginAuth.class);
     private static final String PERSISTENT_UNIT_NAME = "UnitName";

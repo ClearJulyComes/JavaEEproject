@@ -3,12 +3,14 @@ package DBMethods;
 import Entities.Login;
 import Entities.MessageEntity;
 import org.apache.logging.log4j.LogManager;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+/**
+ * Класс по добавлению сообщения в БД.
+ */
 public class MessagesStore {
     private static final String PERSISTENT_UNIT_NAME = "UnitName";
     private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(MessagesStore.class);
@@ -33,14 +35,12 @@ public class MessagesStore {
         entityManager.getTransaction().begin();
         entityManager.persist(messageEntity);
         entityManager.getTransaction().commit();
-        logger.warn("Ok");
         Query query = entityManager.createQuery("SELECT MAX (m.messageId) FROM MessageEntity m WHERE " +
                 "m.userLogin.userLogin IN (:userLoginParam, :hisFriendParam) AND m.hisFriend.userLogin IN (:userLoginParam," +
                 " :hisFriendParam) ");
         query.setParameter("userLoginParam", userLogin);
         query.setParameter("hisFriendParam", hisFriend);
         id = (Long) query.getSingleResult();
-        logger.warn("Fine");
         entityManager.close();
     }
 

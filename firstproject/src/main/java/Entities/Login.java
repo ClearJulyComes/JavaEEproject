@@ -4,6 +4,9 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Сущность пользователя
+ */
 @Entity
 public class Login {
     @Id

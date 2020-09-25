@@ -2,7 +2,12 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>My application</title>
+        <title>Minimal</title>
+        <link rel="SHORTCUT ICON" href="${pageContext.request.contextPath}/favicon.png" type="image/x-icon">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="css/styles.css">
         <script src="./js/jquery-3.5.1.js"></script>
         <script src="./js/underscore.js"></script>
         <script src="./js/underscore.js.map"></script>
@@ -13,7 +18,7 @@
         <script type="text/javascript" src="./js/Models/MessageModel.js"></script>
     </head>
     <body>
-        <div id="wrap">Ok lets start</div>
+        <div id="wrap" class="d-flex flex-column bg-light position-fixed h-100 w-100">Ok lets start</div>
         <script type="text/template" id="authView">
                 <form id="auth" method="post">
                     <table>
@@ -72,17 +77,12 @@
             <form id="addFriend" method="post">
                 <table>
                     <tr>
-                        <td>Add to your friend list</td>
-                        <td colspan="2">
+                        <td>Find friend </td>
+                        <td>
                             <input type="text" name="login" placeholder="login">
                         </td>
-                    </tr>
-                    <tr>
                         <td>
                             <button id="addFriendButton" value="submit">Add</button>
-                        </td>
-                        <td></td>
-                        <td>
                         </td>
                     </tr>
                 </table>
@@ -92,8 +92,14 @@
             <input type="text" name="login" placeholder="Type your message">
             <button id="sendMessage"> Send </button>
         </script>
-        <script id="friendListContainer" type="text/template">Test <div id="friendListUL"></div></script>
+        <script id="chatTmpl" type="text/template">
+            <div id="typeMessage"></div>
+            <div id="messagesBox" class="d-flex flex-column"></div>
+        </script>
+        <script id="friendListContainer" type="text/template">Friends: <div id="friendsList"><table id="friendListUL"></table></div>
+        </script>
         <script type="text/javascript" src="./js/Views/MenuView.js"></script>
+        <script type="text/javascript" src="./js/Views/MenuUnname.js"></script>
         <script type="text/javascript" src="./js/Views/Wrapper.js"></script>
         <script type="text/javascript" src="./js/Views/AuthView.js"></script>
         <script type="text/javascript" src="./js/Views/RegView.js"></script>

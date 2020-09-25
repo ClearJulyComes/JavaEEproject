@@ -2,9 +2,11 @@ package DBMethods;
 
 import Entities.Login;
 import Entities.UserInfo;
-
 import javax.persistence.*;
 
+/**
+ * Класс по добавлению пользователя в БД при регистрации.
+ */
 public class LoginReg {
     private static final String PERSISTENT_UNIT_NAME = "UnitName";
     private String loginReg;

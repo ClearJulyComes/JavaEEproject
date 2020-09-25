@@ -3,7 +3,6 @@ package DBMethods;
 import Entities.Login;
 import Entities.MessageEntity;
 import org.apache.logging.log4j.LogManager;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -11,10 +10,14 @@ import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс для получения последний 30 сообщений между каждым из пользователей, находящихся в друзьях.
+ */
 public class GetMessagesClass {
     private static final String PERSISTENT_UNIT_NAME = "UnitName";
     private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(GetMessagesClass.class);
     private String userLogin;
+
     public GetMessagesClass(String userLogin){
         this.userLogin = userLogin;
     };
@@ -36,7 +39,6 @@ public class GetMessagesClass {
             queryMsg.setMaxResults(20);
             messages.addAll(queryMsg.getResultList());
         }
-        logger.info("Method works");
         return messages;
     }
 }

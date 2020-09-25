@@ -1,13 +1,11 @@
 package Entities;
 
 import com.sun.istack.NotNull;
-import Entities.*;
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
+/**
+ * Сущность пользователя с паролем
+ */
 @Entity
 public class UserInfo {
 

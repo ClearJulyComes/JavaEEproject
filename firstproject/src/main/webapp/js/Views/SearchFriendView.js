@@ -1,4 +1,6 @@
     const SearchFriend = Mn.View.extend({
+        tagName: 'div',
+        className: 'd-inline-flex p-3',
         initialize() {
             this.template = _.template($('#searchFriendView').html())
         },

@@ -6,7 +6,6 @@
         onRender() {
             const self = this;
             $(this.el).find("#friendListUL").empty();
-            console.log(this.model.toArray().length + " array length");
             _.each(this.model.toArray(), function (friend) {
                 self.renderFriend(friend);
             }, this);
@@ -18,7 +17,6 @@
             $(this.el).find("#friendListUL").append(newFriend.render().el);
         },
         addFriend(data) {
-            const self = this;
             const friendModel = new Friend({
                 userLogin: JSON.parse(data).hisFriend
             });
@@ -29,10 +27,7 @@
         deleteFriend(data) {
             const self = this;
             _.each(this.model.toArray(), function (friend) {
-                console.log("Friend name: " + friend.toJSON().userLogin);
-                console.log("Friend JSON name: " + JSON.parse(data).hisFriend);
                 if (friend.toJSON().userLogin === JSON.parse(data).hisFriend) {
-                    console.log("Removed");
                     self.model.remove(friend);
                 }
             });
@@ -42,11 +37,11 @@
     let friendsContainer = new FriendsContainer();
 
     const FriendView = Mn.View.extend({
-        tagName: "div",
+        tagName: "tr",
         initialize() {
-            this.template = _.template(`<span> <%= userLogin %> </span>
-            <button class="writeButton">Write</button>
-            <button class="deleteFriendButton">Delete</button>`)
+            this.template = _.template(`<td><span> <%= userLogin %> </span> </td>
+            <td><button class="writeButton btn btn-dark">Write</button> </td>
+            <td><button class="deleteFriendButton btn btn-dark">Delete</button></td>`)
         },
         ui: {
             deleteButton: '.deleteFriendButton',
@@ -61,7 +56,6 @@
             return this;
         },
         deleteFriend() {
-            const self = this;
             friendSocket.send(JSON.stringify(this.model.toJSON()));
         },
         writeButton() {

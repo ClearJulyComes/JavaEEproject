@@ -1,16 +1,15 @@
 package DBMethods;
 
-import Controllers.FriendController;
 import Entities.Friends;
 import Entities.Login;
-import Entities.UserInfo;
 import org.apache.logging.log4j.LogManager;
-import org.postgresql.util.PSQLException;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+/**
+ * Класс для работы с БД и добавлением в друзья обоих пользователей.
+ */
 public class AddFriend {
 
     private static final String PERSISTENT_UNIT_NAME = "UnitName";
@@ -23,10 +22,9 @@ public class AddFriend {
         this.userLogin = userLogin;
     }
 
-    public void addMethod() throws PSQLException {
+    public void addMethod(){
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENT_UNIT_NAME);
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        logger.info("addMethod works");
         Login userInfo = entityManager.find(Login.class, userLogin);
         Login hisFriend = entityManager.find(Login.class, newFriend);
         Friends friendship = new Friends(userInfo, hisFriend);

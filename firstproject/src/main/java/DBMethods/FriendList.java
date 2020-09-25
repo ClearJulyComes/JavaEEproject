@@ -2,14 +2,17 @@ package DBMethods;
 
 import Entities.Login;
 import org.apache.logging.log4j.LogManager;
-
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * Класс для получения списка друзей пользователя из БД.
+ */
 public class FriendList {
     private static final String PERSISTENT_UNIT_NAME = "UnitName";
     private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(AddFriend.class);
     private String userLogin;
+
     public FriendList(String userLogin){
         this.userLogin = userLogin;
     };

@@ -13,7 +13,6 @@
         },
         onRender() {
             this.showChildView('friendsRegion', friendsContainer);
-            //friendsContainer.fetchFriendsContainer();
             this.showChildView('searchRegion', new SearchFriend());
         }
     });

@@ -1,4 +1,6 @@
 const Auth = Mn.View.extend({
+    tagName: 'div',
+    className: 'align-self-center',
     initialize() {
         this.template = _.template($('#authView').html())
     },
@@ -20,14 +22,13 @@ const Auth = Mn.View.extend({
             e.preventDefault();
 
             $.ajax({
-                url: '/firstproject_war/rest/log/auth', //url страницы (action_ajax_form.php)
-                type: 'POST', //метод отправки
-                dataType: 'text', //формат данных
-                data: $('#auth').serialize(),  // Сеарилизуем объект
-                success: function (response) { //Данные отправлены успешно
-                    console.log("Success AJAX");
+                url: '/firstproject_war/rest/log/auth',
+                type: 'POST',
+                dataType: 'text',
+                data: $('#auth').serialize().replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;"),
+                success: function (response) {
                     userUrl = $("#loginAuth").val();
-                    console.log(userUrl + " url");
                     if ($.trim(response) === "fine") {
                         fetchAll();
                         appRouter.navigate("friends", {trigger: true});
@@ -36,8 +37,7 @@ const Auth = Mn.View.extend({
                         myApp.getView().showChildView('mainRegion', new Auth());
                     }
                 },
-                error: function () { // Данные не отправлены
-                    console.log("Error AJAX");
+                error: function () {
                     alert('Wrong user login');
                     myApp.getView().showChildView('mainRegion', new Auth());
                 }

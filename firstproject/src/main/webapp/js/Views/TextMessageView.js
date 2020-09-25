@@ -1,7 +1,10 @@
     const TextMessageView = Mn.View.extend({
+        tagName: 'div',
+        className: 'd-flex',
         initialize() {
-            this.template = _.template(`<input type="text" id="messageTextBox" name="login" placeholder="Type your message">
-            <button id="sendMessageButton"> Send </button>`);
+            this.template = _.template(`<textarea class="p-2 form-control" type="text" id="messageTextBox" name="login"
+                placeholder="Type your message"></textarea>
+                <button class="p-2 btn btn-dark" id="sendMessageButton"> Send </button>`);
         },
         ui: {
             sendButton: '#sendMessageButton',
@@ -12,7 +15,6 @@
             'keydown @ui.Box' : 'searchKeywords'
         },
         searchKeywords(e){
-            console.log(e.which + " pressed");
             if ( e.which === 13 ) {
                 this.sendMessage();
             }
