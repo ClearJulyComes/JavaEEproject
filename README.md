@@ -1,6 +1,4 @@
----
-permalink: firstproject/docs/src/main/webapp/index.jsp
----
+
 # FirstEEproject
 
 ## Проект single page application веб-приложения на платформе Java EE.
