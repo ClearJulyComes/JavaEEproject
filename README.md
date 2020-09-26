@@ -1,5 +1,5 @@
 ---
-permalink: firstproject/src/main/webapp/index.jsp
+permalink: firstproject/docs/src/main/webapp/index.jsp
 ---
 # FirstEEproject
 
