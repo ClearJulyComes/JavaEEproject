@@ -1,7 +1,7 @@
 let socket;
 
 function messageWebSocket() {
-    socket = new WebSocket("ws://localhost:8080/firstproject_war/messages/" + userUrl);
+    socket = new WebSocket("ws://clearjul.heliohost.org/minimal/messages/" + userUrl);
     socket.onopen = function (e) {
     };
 

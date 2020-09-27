@@ -9,7 +9,7 @@ const Friend = Backbone.Model.extend({
     }
 });
 const Friends = Backbone.Collection.extend({
-    url: 'http://localhost:8080/firstproject_war/rest/friend/get',
+    url: 'http://clearjul.heliohost.org/minimal/rest/friend/get',
     model: Friend
 });
 let friends = new Friends();

@@ -18,7 +18,7 @@ const Menu = Mn.View.extend({
     },
     exitMethod(){
         $.ajax({
-            url:   '/firstproject_war/rest/log/logout'  ,
+            url:   '/minimal/rest/log/logout'  ,
             type:     'POST',
             dataType: 'text',
             data: "Check",

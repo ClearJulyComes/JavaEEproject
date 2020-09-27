@@ -25,7 +25,7 @@
                 e.preventDefault();
 
                 $.ajax({
-                    url: '/firstproject_war/rest/log/reg',
+                    url: '/minimal/rest/log/reg',
                     type: 'POST',
                     dataType: 'application/json',
                     data: $('#reg').serialize().replace(/</g, "&lt;")

@@ -1,6 +1,6 @@
 let friendSocket;
 function friendWebSocket() {
-    friendSocket = new WebSocket("ws://localhost:8080/firstproject_war/friends/" + userUrl);
+    friendSocket = new WebSocket("ws://clearjul.heliohost.org/minimal/friends/" + userUrl);
     friendSocket.onopen = function(e) {
     };
     friendSocket.onmessage = function(event) {

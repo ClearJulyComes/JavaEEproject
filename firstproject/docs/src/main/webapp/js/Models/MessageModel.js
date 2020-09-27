@@ -13,7 +13,7 @@ const Message = Backbone.Model.extend({
 });
 
 const Messages = Backbone.Collection.extend({
-    url: 'http://localhost:8080/firstproject_war/rest/messages/get',
+    url: 'http://clearjul.heliohost.org/minimal/rest/messages/get',
     model: Message,
     sort_key: 'id',
     comparator: function (item) {

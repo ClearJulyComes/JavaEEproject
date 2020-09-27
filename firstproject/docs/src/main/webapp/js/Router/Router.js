@@ -80,7 +80,7 @@
         checkWebSocket(data, second) {
 
             $.ajax({
-                url: '/firstproject_war/rest/log/check',
+                url: '/minimal/rest/log/check',
                 type: 'POST',
                 dataType: 'text',
                 data: "Check",

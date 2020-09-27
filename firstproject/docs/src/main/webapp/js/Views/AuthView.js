@@ -22,7 +22,7 @@ const Auth = Mn.View.extend({
             e.preventDefault();
 
             $.ajax({
-                url: '/firstproject_war/rest/log/auth',
+                url: '/minimal/rest/log/auth',
                 type: 'POST',
                 dataType: 'text',
                 data: $('#auth').serialize().replace(/</g, "&lt;")
